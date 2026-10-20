@@ -1,0 +1,516 @@
+\section{BMW's Quality Process and Causer Attribution}\label{sec:fund_bmw}
+
+BMW's quality management process encompasses the detection and
+documentation of product defects, the containment of their effects, the
+attribution of responsibility, and the initiation of appropriate
+problem-solving activities. In the context of this thesis, the central
+process-level decision is whether a detected defect is attributable to a
+supplier or to an internal unit, such as assembly, logistics, or another
+production-related function. This early attribution determines the
+subsequent investigation and complaint route. The remainder of this
+section describes the systems, data, and roles involved in this process,
+from initial defect detection (Section~\ref{sec:fund_bmw_detection}) to
+the supplier complaint and 8D process (Section~\ref{sec:fund_bmw_8d}).
+Figure~\ref{fig:bmw_process_overview} summarizes this process at a high
+level before each stage is described in detail.
+
+\begin{minipage}{\textwidth}
+\centering
+\begin{tikzpicture}[
+  node distance=0.6cm and 1.2cm,
+  process/.style={
+    rectangle, rounded corners, draw=black, thick,
+    minimum width=7cm, minimum height=1.1cm,
+    align=center, font=\small, inner sep=4pt
+  },
+  decision/.style={
+    diamond, draw=black, thick, aspect=3,
+    minimum width=5.4cm, minimum height=1.8cm,
+    align=center, font=\small, inner sep=2pt
+  },
+  outcome/.style={
+    rectangle, draw=black, thick, double, double distance=1pt,
+    minimum width=4.6cm, minimum height=1.2cm,
+    align=center, font=\small, inner sep=4pt
+  },
+  lbl/.style={font=\scriptsize},
+  arrow/.style={-{Latex[length=2mm]}, thick}
+]
+
+\node[process] (detect) {Defect Detected\\\footnotesize(IPS-Q via MQC)};
+\node[process, below=of detect] (describe)
+  {Defect Described via VFC\\\footnotesize(Defect Type, Place, Location)};
+\node[process, below=of describe] (qi)
+  {Quality Incident (QI) Created\\\footnotesize(if formal investigation required)};
+\node[process, below=of qi] (evidence)
+  {Historical Evidence Reviewed\\\footnotesize(exact-match lookup, inspection, sorting, rework)};
+\node[decision, below=0.8cm of evidence] (decision) {Causer Decision};
+\node[outcome, below left=1.6cm and -0.3cm of decision] (supplier)
+  {Supplier Complaint\\\footnotesize\& 8D Process};
+\node[outcome, below right=1.6cm and -0.3cm of decision] (internal)
+  {Internal Investigation\\\footnotesize(Assembly, Logistics, Parts Quality)};
+
+\draw[arrow] (detect) -- (describe);
+\draw[arrow] (describe) -- (qi);
+\draw[arrow] (qi) -- (evidence);
+\draw[arrow] (evidence) -- (decision);
+\draw[arrow] (decision.west) -- ++(-0.6,0) |- node[lbl, pos=0.75, above] {supplier} (supplier.north);
+\draw[arrow] (decision.east) -- ++(0.6,0) |- node[lbl, pos=0.75, above] {internal} (internal.north);
+
+\end{tikzpicture}
+\captionsetup{type=figure}
+\captionof{figure}{Overview of BMW's current quality-incident and
+  causer-attribution process, synthesized from
+  Sections~\ref{sec:fund_bmw_detection}--\ref{sec:fund_bmw_8d}.}
+\label{fig:bmw_process_overview}
+\end{minipage}
+\vspace{\baselineskip}
+
+\subsection{Defect Detection and Recording}\label{sec:fund_bmw_detection}
+
+The process begins when a defect is detected during production,
+inspection, or rework. A defect may concern, for example, the appearance,
+function, condition, installation, or completeness of a component. The
+\textbf{International Production System for Quality (IPS-Q)} provides the
+production-side context for defects and rework records. Internal material
+identifies \textbf{Modern Quality Capturing (MQC)} as the mobile IPS-Q
+application used for defect recording and initial causer allocation.
+
+A defect record may contain the affected material, supplier, plant,
+vehicle, detection time, a textual problem description, and standardized
+defect characteristics. The IPS-Q-related data fields identified for this
+process include:
+
+\begin{itemize}
+  \item the material number;
+  \item the supplier number;
+  \item the plant;
+  \item the timestamp;
+  \item the defect description; and
+  \item vehicle identification information.
+\end{itemize}
+
+The quality of the initial textual description is important, because it
+determines whether comparable historical cases can be found and correctly
+interpreted. The QMT front-desk process explicitly asks whether the
+problem description is complete and understandable \emph{before}
+considering repeat occurrence, causer attribution, rework, potential root
+causes, and short-term actions. A description such as ``door damaged''
+provides little information for historical comparison, whereas a
+description such as ``damage to the ambient lighting area of the front
+trim'' identifies the affected component and physical position more
+precisely.
+
+\subsection{Standardized Fault Coding}\label{sec:fund_bmw_vfc}
+
+To describe defects consistently, BMW uses a standardized fault coding
+scheme referred to as the \textbf{Vehicle Fault Code (VFC; German:
+\textit{Vereinheitlichte Fehlercodierung})}.
+The VFC provides a standardized structure for documenting product-related
+defects across organizational units, systems, and processes. For this
+thesis, three VFC elements are particularly relevant: the \textbf{defect
+type}, which describes the observed form of deviation and effect; the
+\textbf{defect place}, which identifies the affected component or
+functional area; and the \textbf{defect location}, which provides a more
+precise physical or positional localization. Internal data descriptions
+contain corresponding fields for defect type, defect place, and defect
+location, which are used together with material, supplier, plant, and
+vehicle information to identify defect patterns.
+
+Table~\ref{tab:vfc_elements} illustrates these three elements, together
+with the shared material key, using the door-trim example introduced
+above.
+
+\begin{minipage}{\textwidth}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\captionsetup{type=table,skip=3pt}
+\captionof{table}{VFC elements and the shared material key, illustrated using the door-trim damage example.}
+\label{tab:vfc_elements}
+\begin{tabular}{lp{5cm}p{3.6cm}}
+  \toprule
+  \textbf{Element} & \textbf{Description} & \textbf{Example Value} \\
+  \midrule
+  Defect Type &
+    Observed form of deviation and effect &
+    Damage \\
+  Defect Place &
+    Affected component or functional area &
+    Door trim, ambient lighting \\
+  Defect Location &
+    Precise physical or positional localization &
+    Front right \\
+  Material (shared key) &
+    Identifies the affected part &
+    Corresponding door-trim part number \\
+  \bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{\baselineskip}
+
+In this thesis, the ordered combination of defect type, defect place, and
+defect location is referred to as the \textbf{defect signature}:
+\[
+  D = (T, P, L),
+\]
+where $T$ denotes the defect type, $P$ the defect place, and $L$ the
+defect location. The defect signature provides a common basis for
+retrieving related records: the knowledge graph construction described in
+Chapter~\ref{ch:problem} likewise treats defect type, defect place,
+defect location, and material as business keys for linking historical
+quality incidents and associated rework evidence.
+
+A shared defect signature, however, does not by itself establish an
+identical causer. The damage in the door-trim example could have been
+present when the component arrived from the supplier, or it could have
+occurred during internal transport, assembly handling, or rework. The VFC
+standard describes what was observed; it does not independently determine
+how the defect arose or who caused it.
+
+\subsection{Quality Incident Management}\label{sec:fund_bmw_qi}
+
+When a defect requires formal investigation, it is documented as a
+\textbf{Quality Incident (QI)}. A QI represents the investigation of a
+quality problem rather than only an individual defect occurrence. Internal
+process documentation defines a QI as the formal documentation of a defect
+detected during production, followed by an investigation to identify the
+responsible unit. The relevant process documentation associates QI
+creation, messages, and tasks with QCat and Qcube, systems that also
+support activities for planning and documenting containment, sorting,
+rework, and inspection.
+
+The distinction between a \textbf{defect occurrence} and a QI is
+important:
+
+\begin{itemize}
+  \item A \emph{defect occurrence} describes a specific observation on a
+    vehicle or component.
+  \item A \emph{QI} provides the broader investigation context in which
+    one or more observations are examined.
+\end{itemize}
+
+For example, the same door-trim damage may be detected on several
+vehicles; each vehicle may generate a separate inspection or rework
+record. These records may be investigated under one QI if they are
+considered manifestations of the same quality problem. Conversely, two
+defects with the same VFC description may belong to different QIs if they
+involve different materials, suppliers, plants, or process conditions. The
+QI therefore serves as the formal context in which a defect, its possible
+recurrence, and its potentially responsible units are assessed.
+
+\subsection{Process-Level Causer Attribution}\label{sec:fund_bmw_causer}
+
+\textbf{Process-level causer attribution} refers to the identification of
+the organizational or process-level unit most likely responsible for a
+quality defect. The initial decision generally distinguishes between a
+supplier-related issue and an internally caused issue involving assembly,
+logistics, or another relevant unit. The QMT front-desk process explicitly
+includes the question of who the causer for the issue is, with assembly,
+parts quality, and logistics listed as possible areas to be considered.
+
+Causer attribution must be distinguished from \textbf{root-cause
+identification}. Causer attribution determines the organizational or
+process-level area to which an incident should initially be directed;
+root-cause identification determines the precise technical or procedural
+mechanism that produced the defect. For example, assembly may initially be
+identified as the likely causer before the technical root cause is found
+to be an unsuitable installation tool or an incorrect handling sequence.
+Similarly, a supplier may be identified as the likely responsible party
+before a manufacturing or packaging deviation is confirmed as the
+technical root cause.
+
+The QMT front-desk assessment includes more than the defect
+classification. The documented business questions address:
+
+\begin{itemize}
+  \item whether the problem description is complete;
+  \item whether the issue has occurred previously (repeat occurrence);
+  \item who the likely causer is;
+  \item whether the rework has been fully and correctly recorded;
+  \item which potential root causes and short-term actions are known;
+  \item whether the issue is isolated or part of a series; and
+  \item whether other plants are, or may be, affected.
+\end{itemize}
+
+The result is an early process decision based on the information
+available at the time. It guides the subsequent investigation but may be
+revised as additional evidence becomes available.
+
+\subsection{Historical Lookup and Repeat-Problem Identification}\label{sec:fund_bmw_lookup}
+
+The current investigation process combines structured historical lookup
+with expert assessment. Internal QMT training material describes a
+repeat-failure search that queries three different combinations of
+supplier number, part number, and VFC attributes.
+% TODO: confirm the exact name of the lookup tool/function described in
+% the QMT training material -- unclear in the source recording.
+An empty result list indicates that no comparable QI was found using the
+active search configuration; where a QI with the same defect pattern
+already exists, the new QI can be linked to the original case and marked
+as a repeat failure.
+
+At a high level, the current process can be summarized as follows:
+
+\begin{enumerate}
+  \item A defect is recorded in IPS-Q through MQC.
+  \item The defect is described using the VFC and relevant product and
+    process information.
+  \item A QI is created when formal investigation is required.
+  \item Historical incidents are searched using configured combinations of
+    supplier, part, and VFC attributes.
+  \item Related inspection, sorting, and rework information is reviewed.
+  \item The incident is assigned to a supplier or an internal unit.
+  \item The responsible expert validates the assignment and initiates the
+    corresponding follow-up process.
+\end{enumerate}
+
+This sequence is a synthesis of the documented system landscape and
+front-desk business questions; the exact execution may vary according to
+the type and context of the incident. For example, an investigator
+assessing door-trim damage may retrieve incidents involving the same
+material and VFC description. If comparable incidents were previously
+assigned to the supplier, they provide historical support for supplier
+attribution. Nevertheless, their applicability to the current case must be
+evaluated using the supplier, plant, detection point, production stage,
+and other available context.
+
+The current lookup is transparent, because the filter attributes are
+explicit. Its coverage is nevertheless limited by the defined search
+combinations and the completeness of the recorded information: a relevant
+historical case may not be returned if it differs in material, supplier,
+fault type, or another required attribute. The thesis proposal identifies
+this exact-match limitation as a central weakness of the existing
+approach.
+
+\subsection{Inspection, Sorting, and Rework}\label{sec:fund_bmw_isr}
+
+Inspection, sorting, and rework are related quality activities, but they
+serve different purposes and produce different forms of information.
+\textbf{Inspection} evaluates a product's quality characteristics and
+records the context in which a defect was identified; the inspection
+information considered in this thesis includes the station, the
+production stage, the relevant quality check, and the test result.
+\textbf{Sorting} examines a defined population of parts or vehicles, and
+it distinguishes sorting performed by a supplier, internally by BMW, or
+through a mixed form involving BMW personnel, a quality service provider,
+and the supplier. \textbf{Rework} documents how a detected defect was
+corrected; the relevant records may contain the defect type, the repair
+action (referred to as the rework activity), the affected component, the
+plant, and the responsible department.
+
+Across the different systems used by QMT, these activities are
+represented through \textbf{Sorting, Rework, and Inspection (SRI) orders}.
+The documented SRI process includes order creation, instructions, and the
+recording of inspection results as OK or NOK (not OK).
+
+These activities provide complementary perspectives: inspection records
+where and under which conditions a defect is detected, sorting records the
+result of examining a defined population, and rework records how the
+defect was corrected. These perspectives must not be confused with
+causation. The place at which a defect is detected is not necessarily the
+place at which it was created; likewise, the unit that performs the repair
+is not automatically the causer. For example, door-trim damage detected at
+an assembly inspection point may already have existed before the
+component entered assembly; conversely, a conforming component may be
+damaged during installation and subsequently reworked at another station.
+Detection, correction, and causation therefore remain separate aspects of
+the investigation.
+
+\subsection{Roles in the Quality Process}\label{sec:fund_bmw_roles}
+
+Several roles contribute to defect detection, investigation, containment,
+and problem-solving:
+
+\begin{description}[%
+  style=nextline,
+  leftmargin=0pt,
+  labelsep=0pt,
+  font=\normalfont\bfseries,
+  itemsep=\baselineskip,
+  topsep=\smallskipamount
+]
+  \item[Production and Assembly]
+    Identify defects in the manufacturing environment and provide the
+    initial defect and process context. MQC is positioned in the internal
+    ecosystem as the application for recording a defect and performing an
+    initial allocation to a likely causer.
+
+  \item[Quality Engineers and QMT Front-Desk Personnel]
+    Examine the problem description, compare the issue with previous
+    cases, assess a likely causer, and determine the appropriate follow-up
+    process. Their documented business questions include repeat
+    occurrence, causer identification, rework completeness, potential
+    root causes, short-term actions, and affected plants.
+
+  \item[Internal Units (Assembly, Logistics, Parts Quality, and Related Units)]
+    May receive incidents for further investigation when internal
+    responsibility is suspected. These units appear as potential causer
+    categories in the processing paths documented in the QMT front-desk
+    material.
+
+  \item[Suppliers]
+    Participate in the complaint and problem-solving process when
+    supplier responsibility is suspected. A dedicated supplier portal,
+    qWin, supports the exchange and management of supplier-related 8D
+    information, including requested 8D reports. External quality
+    service providers may perform sorting activities,
+    while mixed sorting additionally involves the supplier.
+\end{description}
+
+\subsection{Supplier Complaints and the 8D Process}\label{sec:fund_bmw_8d}
+
+If a defect is considered supplier-related, the incident can proceed to a
+supplier complaint process. The documented system landscape connects the
+quality notification to \textbf{8D (eight-disciplines) reporting}.
+
+The 8D method is a structured problem-solving approach used to identify,
+correct, and prevent recurring product or process problems. It progresses
+from team formation and problem definition, through containment and
+root-cause analysis, to permanent corrective actions and the prevention of
+recurrence.
+
+The 8D method originated in the automotive industry as a standardized
+framework for supplier and internal problem-solving and is applied within
+BMW's quality management process whenever a defect is confirmed as
+supplier-related. Although the disciplines are numbered sequentially, they
+are not always executed strictly one after another in practice: D3
+(interim containment) is typically initiated in parallel with, or even
+before, the completion of D4 (root-cause analysis), since protecting the
+customer and the production process cannot wait until the root cause is
+fully understood.
+
+Each discipline is documented with a responsible owner, supporting
+evidence, and a completion date. This staged documentation means that an
+8D report's evidentiary value depends on how far the investigation had
+progressed at the time it is reviewed: a report that is still open may
+contain only a preliminary problem description and containment action,
+whereas a closed report additionally documents a verified root cause and
+validated corrective actions. Table~\ref{tab:8d_disciplines} summarizes
+the eight disciplines reviewed for this thesis.
+
+\begin{minipage}{\textwidth}
+\centering
+\footnotesize
+\captionsetup{type=table}
+\captionof{table}{The eight disciplines (8D) of the problem-solving process.}
+\label{tab:8d_disciplines}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{lp{3.9cm}p{6.8cm}}
+  \toprule
+  \textbf{Discipline} & \textbf{Title} & \textbf{Purpose} \\
+  \midrule
+  D1 &
+    Establish the Team &
+    Form a cross-functional team with the product and process knowledge
+    required to investigate and resolve the problem. \\
+  \addlinespace
+  D2 &
+    Define and Describe the Problem &
+    Describe the problem clearly and, where possible, quantitatively. A
+    description should establish what occurred, where and when it
+    occurred, who or what was affected, and the extent of the problem. \\
+  \addlinespace
+  D3 &
+    Develop and Implement Interim Containment Actions &
+    Introduce temporary measures to isolate the problem and protect the
+    customer or production process while the root cause is being
+    investigated. \\
+  \addlinespace
+  D4 &
+    Determine and Verify Root Causes &
+    Identify and verify the causes that explain why the problem occurred.
+    This discipline also considers why the defect was not detected
+    earlier. Methods such as the 5~Whys and cause-and-effect diagrams may
+    support the analysis. \\
+  \addlinespace
+  D5 &
+    Select and Verify Permanent Corrective Actions &
+    Identify permanent actions that address the verified root cause, and
+    confirm that the selected actions are capable of resolving the
+    problem. \\
+  \addlinespace
+  D6 &
+    Implement and Validate Corrective Actions &
+    Implement the selected permanent corrective actions and verify their
+    effectiveness using appropriate evidence. \\
+  \addlinespace
+  D7 &
+    Prevent Recurrence &
+    Modify relevant systems, procedures, practices, or controls to
+    prevent the same or similar problems from recurring. \\
+  \addlinespace
+  D8 &
+    Recognize the Team and Close the Process &
+    Recognize the team's contribution and formally close out the
+    problem-solving process. \\
+  \bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{\baselineskip}
+
+In practice, each QI is assigned a priority level, and the eight
+disciplines are governed by corresponding target timelines that differ
+between high- and low-priority cases.
+% TODO: confirm the exact priority levels/terminology and timeline
+% structure with the industry supervisor -- unclear in the source
+% recording.
+
+For causer attribution, the 8D process is particularly relevant because
+its disciplines produce different forms of historical evidence: D2
+contains a structured description of the problem, D3 records the interim
+containment measures, D4 documents the verified root cause, and D5
+through D7 describe the selected, implemented, and preventive corrective
+actions.
+
+Completed 8D reports can therefore provide evidence about how comparable
+historical incidents were investigated and resolved. However, a
+historical 8D report should not automatically determine the causer of a
+new defect; its relevance depends on whether the current and historical
+cases are comparable in terms of defect, material, supplier, plant, and
+process context. For example, an earlier 8D report may document that
+comparable door-trim damage was related to supplier packaging. This
+provides relevant historical evidence if the current incident involves
+the same material, supplier, and incoming inspection point; its relevance
+is weak if the defect was first identified only after an internal
+assembly activity. Within this thesis, 8D information is consequently
+treated as an important historical evidence source rather than as an
+automatic attribution rule.
+
+\subsection{Summary}\label{sec:fund_bmw_summary}
+
+This section has described BMW's current quality process and the data it
+produces. A defect is first recorded in IPS-Q through MQC and described
+using the VFC, whose defect type, defect place, and defect location form
+the defect signature introduced in Section~\ref{sec:fund_bmw_vfc}; when
+formal investigation is required, this is escalated to a QI, which may
+bundle several defect occurrences or, conversely, split identical-looking
+defects across several QIs depending on material, supplier, plant, and
+process context (Section~\ref{sec:fund_bmw_qi}). The central decision at
+this stage is process-level causer attribution, which must be kept
+distinct from technical root-cause identification and which the QMT
+front-desk process supports through a fixed set of documented business
+questions (Section~\ref{sec:fund_bmw_causer}). Today, this decision relies
+on a structured but exact-match historical lookup across supplier, part,
+and VFC attributes, which is transparent but fails whenever no identical
+historical case exists (Section~\ref{sec:fund_bmw_lookup}). Inspection,
+sorting, and rework records provide complementary evidence about where a
+defect was detected and how it was corrected, but none of these, nor the
+unit that performs them, can be equated with causation
+(Section~\ref{sec:fund_bmw_isr}). Several roles, from production and
+assembly to quality engineers, internal units, and suppliers, contribute
+evidence at different stages of this process
+(Section~\ref{sec:fund_bmw_roles}), and supplier-related incidents
+additionally generate 8D reports, whose eight disciplines yield
+further, differently reliable forms of historical evidence depending on
+how far an investigation has progressed (Section~\ref{sec:fund_bmw_8d}).
+
+Across all eight subsections, the same limitation recurs: relevant
+evidence is distributed across IPS-Q, QCat, Qcube, SRI orders, and 8D
+reports, and today it is combined only through exact-match retrieval on a
+small set of attributes, rather than through systematic reasoning over
+all available historical evidence. This motivates the knowledge-graph-based
+approach developed in the remainder of this thesis, which integrates
+these heterogeneous data sources into a single structure
+(Chapter~\ref{ch:problem}) and supports evidence retrieval, aggregation,
+and explanation beyond exact-match lookup (Chapter~\ref{ch:method}).

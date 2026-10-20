@@ -1,0 +1,141 @@
+\section{Motivation}\label{sec:intro_motivation}
+
+\subsection{Industry Motivation: BMW Quality Management}\label{sec:intro_motivation_bmw}
+
+In modern automotive manufacturing, maintaining product quality requires the
+rapid identification and resolution of defects throughout the production
+process. When a quality incident is detected, one of the first and most
+critical challenges faced by quality engineers is determining the
+responsible causer of the defect: specifically, whether the issue
+originates from a supplier-provided component or from an internal process
+within production, assembly, logistics, or engineering. This distinction
+directly impacts the speed and effectiveness of corrective actions. The
+current BMW quality process follows this principle by forwarding
+supplier-related incidents to the quality management trend desk, where a
+quality notification is created in the SAP system and a corresponding
+supplier complaint and 8D problem-solving process is initiated; internal
+issues follow an alternative investigation and resolution process.
+
+Despite extensive quality management procedures and the availability of
+large amounts of historical quality data, accurately identifying the true
+causer of a defect remains a challenging task. Quality associates often
+rely on historical incidents, expert knowledge, rework records, inspection
+information, supplier complaints, and previous 8D reports to support their
+decisions. However, these data sources are distributed across different
+systems and are rarely connected in a manner that supports efficient
+cross-referencing. In practice, such approaches perform adequately when an
+identical incident has occurred previously, but become significantly less
+effective when new or slightly different defect scenarios arise. As a
+result, valuable information contained in related incidents, rework
+histories, inspections, and historical supplier interactions often remains
+unused.
+
+The consequences of incorrect causal attribution can be substantial. If a
+defect is incorrectly classified as supplier-related, an unnecessary
+supplier complaint and lengthy clarification cycle may be initiated.
+Conversely, if a genuine supplier issue is not identified at an early
+stage, corrective actions may be delayed while the underlying defects
+continue to affect production. Furthermore, the formal confirmation of
+supplier responsibility often depends on the outcome of subsequent
+root-cause investigations, which may require considerable time before a
+definitive acknowledgement becomes available. During this period, the
+production organization must continue operating under uncertainty,
+increasing the risk of repeated defects, additional rework activities, and
+inefficient resource utilization. Reliable causer identification during
+the earlier stages of defect analysis therefore represents a significant
+opportunity for improving operational efficiency and reducing problem
+resolution lead times.
+
+At the same time, the organization possesses an enormous amount of
+accumulated quality knowledge: historical quality incidents, rework
+records, inspection records, supplier complaints, root causes, corrective
+actions, and 8D reports collectively contain valuable information that
+can support future decisions. However, this knowledge is often fragmented
+across multiple enterprise systems and remains difficult to reuse
+systematically. Consequently, quality engineers repeatedly perform similar
+investigations even though evidence from comparable historical cases may
+already exist. The challenge is therefore no longer the availability of
+data, but rather the ability to transform historical enterprise knowledge
+into actionable and trustworthy decision support.
+
+To address this challenge, this thesis investigates the development of a
+system capable of identifying likely defect causers based on evidence
+derived from historical quality knowledge. The proposed solution
+integrates quality incidents, rework activities, inspection information,
+supplier-related reports, material data, and historical resolutions into
+a unified knowledge graph. By utilizing this interconnected knowledge
+base, the system aims to support quality engineers in determining whether
+a defect is likely supplier-related or internally caused, identifying
+recurring patterns, discovering lessons learned from previous incidents,
+and providing transparent recommendations supported by historical
+evidence. The objective is not to replace human expertise, but to augment
+it through explainable and evidence-driven artificial intelligence.
+
+\subsection{Scientific Motivation}\label{sec:intro_motivation_sci}
+
+While the industry motivation of this work originates from automotive
+quality management, the underlying research problem extends far beyond
+the BMW domain. Similar challenges occur in many complex environments,
+including aircraft maintenance, semiconductor manufacturing, healthcare
+incident analysis, industrial fault diagnosis, and large-scale asset
+management. In all of these settings, organizations possess vast amounts
+of historical knowledge distributed across heterogeneous data systems,
+and their decision-makers must continuously evaluate previously unseen
+situations under uncertainty.
+
+Traditional approaches for supporting such decisions generally fall into
+three categories. Rule-based systems provide transparent decisions by
+relying on predefined expert knowledge and deterministic rules; however,
+their effectiveness is limited by their inability to generalize beyond
+explicitly defined scenarios, and when no matching rule exists, the
+system is unable to provide a meaningful recommendation. Machine learning
+approaches improve predictive performance by learning patterns directly
+from data, but they often operate as black boxes, making it difficult for
+domain experts to understand why a specific recommendation was produced;
+this lack of transparency limits trust and adoption in industrial
+decision-making environments. Knowledge graph approaches provide a
+structured representation of enterprise knowledge and support transparent
+retrieval of related information through explicit relationships between
+entities; however, most existing applications focus primarily on
+deterministic retrieval rather than on reasoning over multiple
+heterogeneous sources of evidence.
+
+This thesis argues that none of these approaches alone is sufficient for
+supporting complex industrial decision-making tasks. Instead, effective
+decision support requires a combination of structured enterprise
+knowledge, evidence retrieval, evidence evaluation, reasoning, and
+explainability. Consequently, this research proposes an evidence-centric
+reasoning framework for industrial knowledge graphs. Rather than producing
+direct predictions from isolated data points, the framework retrieves
+relevant historical evidence from multiple sources, evaluates the strength
+and consistency of this evidence, resolves potential conflicts between
+evidence channels, and generates recommendations through large language
+model reasoning. The resulting recommendation is accompanied by a
+traceable explanation that explicitly identifies the evidence supporting
+the conclusion.
+
+The core research challenge addressed by this thesis is therefore not
+merely the prediction of a defect's causer. Instead, it investigates a
+broader question:
+
+\begin{quote}
+\textbf{How can a system support trustworthy decision-making by
+retrieving, aggregating, evaluating, and reasoning about heterogeneous
+evidence contained within industrial knowledge graphs?}
+\end{quote}
+
+To answer this question, the proposed framework integrates symbolic models, graph
+retrieval, multi-source evidence aggregation and ranking, conflict
+resolution mechanisms, and large-language-model-based explanation
+generation. Through this combination, the system seeks to overcome the
+limitations of traditional rule-based systems, black-box machine learning
+models, and purely deterministic knowledge-graph retrieval.
+
+The scientific contribution of this work therefore extends beyond the
+automotive domain. While BMW quality management provides the validation
+environment, the proposed methodology represents a general framework for
+explainable decision support on industrial knowledge graphs. The central
+contribution lies in demonstrating how heterogeneous enterprise knowledge
+graphs can be transformed into transparent, evidence-based recommendations
+that remain understandable, auditable, and trustworthy for human
+decision-makers.

@@ -1,0 +1,408 @@
+% =====================================================================
+%  Master's Thesis – THWS, Faculty of Computer Science and
+%  Business Information Systems
+%  Compiler: pdfLaTeX   |   Bibliography: biber (biblatex)
+% =====================================================================
+\documentclass[
+  12pt,
+  a4paper,
+  twoside=false,     % use twoside + openright for double-sided printing
+  parskip,
+  listof=totoc,      % list of figures/tables appear in the TOC
+  bibliography=totoc % bibliography appears in the TOC
+]{scrbook}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Language & encoding
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ngerman,english]{babel}   % last language = main language
+\usepackage{csquotes}                 % load AFTER babel
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% KOMA helpers & page layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrhack}
+\usepackage[markcase=ignoreuppercase,headsepline,plainfootsepline]{scrlayer-scrpage}
+\usepackage{setspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Math, symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{nicefrac}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Figures, tables, floats
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}                 % no [pdftex]: works with any engine
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}               % replaces obsolete 'subfigure'
+\usepackage{float}
+\usepackage[verbose]{placeins}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}                 % flexible list customization (itemize/enumerate/description)
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Code listings & colours
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}                   % 'color' not needed alongside xcolor
+\usepackage{listings}
+\usepackage[htt]{hyphenat}            % line breaks inside \texttt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
+\addbibresource{literatur.bib}        % replaces deprecated \bibliography{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% hyperref – load (almost) last
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[hidelinks]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Thesis metadata  –  TODO: fill in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\BaAuthor{Riya Biju}
+\def\BaAuthorStudyProgram{Artificial Intelligence}   % TODO: check official program name
+\def\BaDegree{Master of Science (M.Sc.)}
+\def\BaType{Master's Thesis}
+\def\BaTypeDE{Masterarbeit}
+\def\BaTitle{Explainable Causer Attribution for Quality Incidents at BMW Group: Knowledge Graph Link Prediction with Evidence-Based Explanations for
+Automotive Production}                  % TODO: working title
+\def\BaSupervisorOne{Prof.\ Dr.\ Ivan Yamshchikov}               % first examiner (THWS)
+\def\BaSupervisorTwo{Prof.\ Dr.\ Andreas Lehrmann}               % second examiner
+\def\BaCompanySupervisor{Martin Schneider, BMW Group}            % industry supervisor
+% Working date: 6-month Bearbeitungszeit from the signed Anmeldeformular
+% (start 25.09.2026) -> 25.03.2027. TODO: confirm the exact official deadline.
+\def\BaDeadline{25 March 2027}
+
+\def\iswithfullname{1}  % comment out to create an anonymised version
+\ifdefined\iswithfullname
+  \def\ShowBaAuthor{\BaAuthor}
+\else
+  \def\ShowBaAuthor{N.~N.}
+\fi
+
+\hypersetup{
+  pdfauthor={\ShowBaAuthor},
+  pdftitle={\BaTitle},
+  pdfsubject={\BaType},
+  pdfkeywords={Knowledge Graphs, Explainable AI, Causer Attribution, Quality Management,}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Listing styles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\definecolor{codegray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{codecyan}{rgb}{0.0,0.6,0.6}
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+
+% Global defaults (FIX: missing comma after \upshape)
+\lstset{
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{codegray}\upshape,
+  linewidth=\textwidth,
+  breaklines=true,
+  breakatwhitespace=true,
+  keepspaces=true,
+  tabsize=4,
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  numbersep=8pt,
+  backgroundcolor=\color{background},
+  captionpos=b
+}
+
+% JSON
+\lstdefinelanguage{json}{
+  literate=
+   *{0}{{{\color{numb}0}}}{1}
+    {1}{{{\color{numb}1}}}{1}
+    {2}{{{\color{numb}2}}}{1}
+    {3}{{{\color{numb}3}}}{1}
+    {4}{{{\color{numb}4}}}{1}
+    {5}{{{\color{numb}5}}}{1}
+    {6}{{{\color{numb}6}}}{1}
+    {7}{{{\color{numb}7}}}{1}
+    {8}{{{\color{numb}8}}}{1}
+    {9}{{{\color{numb}9}}}{1}
+    {:}{{{\color{punct}{:}}}}{1}
+    {,}{{{\color{punct}{,}}}}{1}
+    {\{}{{{\color{delim}{\{}}}}{1}
+    {\}}{{{\color{delim}{\}}}}}{1}
+    {[}{{{\color{delim}{[}}}}{1}
+    {]}{{{\color{delim}{]}}}}{1},
+}
+
+% Named styles instead of overwriting the global settings each time
+\lstdefinestyle{python}{
+  language=Python,
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  commentstyle=\color{pgreen}
+}
+\lstdefinestyle{xmlstyle}{
+  language=XML,
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{codecyan},
+  morekeywords={xmlns,version,type}
+}
+\lstdefinestyle{cypher}{          % Neo4j / knowledge-graph queries
+  morekeywords={MATCH,WHERE,RETURN,WITH,CREATE,MERGE,OPTIONAL,ORDER,BY,
+                LIMIT,AS,AND,OR,NOT,DISTINCT,COUNT,UNWIND},
+  sensitive=false,
+  keywordstyle=\color{pblue}\bfseries,
+  stringstyle=\color{pred},
+  morestring=[b]",
+  morestring=[b]',
+  morecomment=[l]{//}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Title page helper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\forcetwosidetitle}[1][1]{%
+ \begingroup
+   \cleardoubleoddpage
+   \KOMAoptions{titlepage=true}%
+   \csname @twosidetrue\endcsname
+   \maketitle[{#1}]
+ \endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+%% ---------------- Title page ----------------
+% Logo placeholders -- TODO: add the official logo files to figures/
+% (e.g. figures/thws_logo.pdf and figures/bmw_logo.pdf) and then swap each
+% \fbox{...} placeholder below for the commented \includegraphics line.
+% Use the official THWS corporate-design logo and the BMW logo as supplied
+% by your industry supervisor/BMW corporate design guidelines -- do not
+% recreate or redraw either logo by hand.
+\titlehead{%
+  \begin{minipage}[c]{0.48\textwidth}
+    \raggedright
+    \fbox{\parbox[c][1.8cm][c]{3.5cm}{\centering\small THWS logo}}
+    % \includegraphics[height=1.8cm]{figures/thws_logo}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.48\textwidth}
+    \raggedleft
+    \fbox{\parbox[c][1.8cm][c]{3.5cm}{\centering\small BMW logo}}
+    % \includegraphics[height=1.8cm]{figures/bmw_logo}
+  \end{minipage}\\[8mm]
+  Technical University of Applied Sciences Würzburg-Schweinfurt\\
+  Faculty of Computer Science and Business Information Systems}
+\subject{\BaType}
+\title{\BaTitle\\[15mm]}
+\subtitle{\normalsize{Submitted to the Technical University of Applied Sciences
+  Würzburg-Schweinfurt, Faculty of Computer Science and Business Information
+  Systems, in partial fulfilment of the requirements for the degree of
+  \BaDegree{} in \BaAuthorStudyProgram}}
+\author{\ShowBaAuthor}
+\date{\normalsize{Submitted on: \BaDeadline}}
+\publishers{
+  \normalsize{First examiner: \BaSupervisorOne}\\
+  \normalsize{Second examiner: \BaSupervisorTwo}\\
+  \normalsize{Industry supervisor: \BaCompanySupervisor}\\
+}
+% QR code on the back of the title page.
+% TODO: confirm what the QR code should link to (digital version of the
+% thesis, project repository, supplementary material, ...) and caption it
+% accordingly.
+\lowertitleback{\centering\includegraphics[width=3cm]{figures/qrcode}\\[2mm]
+  {\small TODO: caption / target URL for QR code}}
+\forcetwosidetitle
+
+%% ---------------- Confidentiality notice ----------------
+% TODO: confirm with BMW and the Prüfungsamt whether a confidentiality
+% notice (Sperrvermerk) is required, and whether an English-only version is
+% accepted, or an official German version must also be included -- use the
+% officially approved wording. Delete this section if not needed.
+\addchap*{Confidentiality Notice}
+This thesis contains confidential data and information of BMW Group
+(Bayerische Motoren Werke AG). Its contents may not be published, copied or
+made accessible to third parties, in whole or in part, without the express
+written consent of BMW Group. Access is restricted to the examiners and
+members of the examination board. This restriction applies for a period of
+TODO years from the date of submission.
+
+%% ---------------- Abstracts ----------------
+% DRAFT -- written from the thesis proposal / one-pager before experiments were
+% run. TODO: once results exist, replace the result sentence with an actual
+% number (Hits@k / MRR / coverage gain) and re-check the word count (200-300).
+\addchap*{Abstract}
+When a defect is detected in automotive production, quality engineers must
+identify its causer -- a supplier or an internal unit -- to route the case
+correctly, for example into the 8D problem-solving process. At BMW Group,
+this causer attribution today relies on exact-match lookup across defect
+type, defect place, defect location and material number against historical
+repair records. This process fails whenever no identical historical case
+exists, ignores near-miss evidence, and is slow to execute manually,
+leading to wrong bookings, misdirected 8D processes and supplier disputes.
+This thesis reformulates causer attribution as an explainable link
+prediction task on a knowledge graph: given a new incident node, the goal
+is to predict the missing edge to its causer. A knowledge graph is
+constructed from BMW's quality notification, inspection and rework data
+(Qcube/SAP), connecting incidents, reworks and inspections through shared
+defect, material and cost-centre nodes. Three families of attribution
+models are compared on this graph: a rule-based baseline that mirrors the
+current manual process, knowledge graph embeddings (TransE, ComplEx), and
+a relational graph neural network (R-GCN) that aggregates each incident's
+neighbourhood for prediction. Every prediction is accompanied by
+path-based evidence from historical cases, and a locally hosted large
+language model narrates this evidence in natural language without making
+predictions itself, keeping the explanation audit-ready for quality
+engineers. TODO: state the key quantitative result (e.g.\ Hits@\(k\), MRR
+or coverage gain over the rule-based baseline) once available. The
+findings indicate [TODO] and demonstrate [TODO -- significance for
+quality management practice at BMW and, more broadly, for explainable
+link prediction on event-centric industrial knowledge graphs].
+
+\begin{otherlanguage}{ngerman}
+\addchap*{Zusammenfassung}
+% DRAFT -- deutsche Fassung des Abstracts, vor Durchführung der Experimente
+% verfasst. TODO: nach Vorliegen der Ergebnisse das Ergebnis mit konkreter
+% Zahl ergänzen und die Wortzahl (200-300) prüfen.
+Wird in der Fahrzeugproduktion ein Fehler festgestellt, müssen
+Qualitätsingenieure den Verursacher -- einen Lieferanten oder eine interne
+Einheit -- identifizieren, um den Fall korrekt weiterzuleiten, etwa in den
+8D-Problemlösungsprozess. Bei der BMW Group basiert diese
+Verursacherzuordnung heute auf einem exakten Abgleich von Fehlerart,
+Fehlerort, Fehlerstelle und Materialnummer mit historischen
+Reparaturdatensätzen. Dieser Prozess versagt, wenn kein identischer
+historischer Fall existiert, berücksichtigt keine Fast-Treffer als Hinweis
+und ist in der manuellen Durchführung langsam -- mit der Folge von
+Fehlbuchungen, falsch adressierten 8D-Prozessen und Lieferantenstreitigkeiten.
+Diese Arbeit formuliert die Verursacherzuordnung als erklärbare
+Link-Prediction-Aufgabe auf einem Knowledge Graph: Für einen neuen
+Vorfallsknoten soll die fehlende Kante zu seinem Verursacher vorhergesagt
+werden. Ein Knowledge Graph wird aus den Qualitätsmeldungs-, Prüf- und
+Nacharbeitsdaten (Qcube/SAP) der BMW Group aufgebaut und verbindet
+Vorfälle, Nacharbeiten und Prüfungen über gemeinsame Fehler-, Material-
+und Kostenstellenknoten. Drei Modellfamilien zur Verursacherzuordnung
+werden auf diesem Graphen verglichen: eine regelbasierte Baseline, die den
+aktuellen manuellen Prozess abbildet, Knowledge-Graph-Embeddings (TransE,
+ComplEx) sowie ein relationales Graph Neural Network (R-GCN), das die
+Nachbarschaft jedes Vorfalls für die Vorhersage aggregiert. Jede Vorhersage
+wird durch pfadbasierte Evidenz aus historischen Fällen begründet; ein
+lokal betriebenes Sprachmodell verbalisiert diese Evidenz in natürlicher
+Sprache, ohne selbst Vorhersagen zu treffen, sodass die Erklärung für
+Qualitätsingenieure prüfbar bleibt. TODO: zentrales quantitatives Ergebnis
+(z.\,B. Hits@\(k\), MRR oder Abdeckungsgewinn gegenüber der regelbasierten
+Baseline) ergänzen, sobald verfügbar.
+\end{otherlanguage}
+
+%% ---------------- Acknowledgements ----------------
+\addchap*{Acknowledgements}
+TODO
+
+%% ---------------- Table of contents ----------------
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Main part
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+% Each chapter lives in its own folder under chapters/ and is split further
+% into one file per section. Edit those files directly -- \input re-reads
+% them on every compile, so changes are picked up here automatically.
+\input{chapters/01-introduction/introduction}
+\input{chapters/02-fundamentals/fundamentals}
+\input{chapters/03-related-work/related-work}
+\input{chapters/04-problem-formulation/problem-formulation}
+\input{chapters/05-method/method}
+\input{chapters/06-experimental-setup/experimental-setup}
+\input{chapters/07-results/results}
+\input{chapters/08-conclusion/conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Appendix  (FIX: \appendix now comes BEFORE \backmatter)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\input{chapters/appendix/additional-tables}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Back matter: lists, bibliography, declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+\listoffigures      % added to TOC via class option listof=totoc
+\listoftables
+\lstlistoflistings  % scrhack + listof=totoc add this to the TOC automatically
+
+\printbibliography  % added to TOC via class option bibliography=totoc
+
+%% ---------------- Declarations ----------------
+% TODO: translated from the standard THWS German wording -- confirm with
+% the THWS Prüfungsamt that an English-language declaration is accepted for
+% submission; some faculties still require the official German wording
+% (Eidesstattliche Erklärung / Zustimmung zur Plagiatsüberprüfung) even in
+% an otherwise English thesis.
+
+\addchap{Declaration of Authorship}
+
+I hereby declare that I have written the present \BaType{} independently
+and have not submitted it elsewhere for examination purposes. All sources
+and aids used have been indicated, and all direct and indirect quotations
+have been marked as such.
+
+\vspace{20pt}
+\begin{flushright}
+$\overline{~~~~~~~~~~~~~~~~~\mbox{\ShowBaAuthor, on \today}~~~~~~~~~~~~~~~~~}$
+\end{flushright}
+
+\addchap{Consent to Plagiarism Check}
+
+% TODO: confirm which plagiarism-checking service THWS currently uses.
+I hereby consent that, for the purpose of checking this work for plagiarism,
+my submitted thesis will be transmitted in digital form to PlagScan
+(www.plagscan.com) and will be temporarily stored (for a maximum of
+5~years) in the database maintained by PlagScan, and that personal data
+forming part of this thesis will be stored there as well.
+
+\begin{small}
+This consent is voluntary. Without this consent, the plagiarism check
+cannot be prevented, provided all personal information is removed and
+copyright requirements are observed. Consent to the storage and use of
+personal data may be withdrawn at any time by notifying the faculty.
+\end{small}
+
+\vspace{20pt}
+\begin{flushright}
+$\overline{~~~~~~~~~~~~~~~~~\mbox{\ShowBaAuthor, on \today}~~~~~~~~~~~~~~~~~}$
+\end{flushright}
+
+\end{document}

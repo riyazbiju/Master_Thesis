@@ -1,0 +1,13 @@
+\section{Explanation Generation}\label{sec:method_expl}
+TODO
+
+% ---- Listing example ----
+\begin{lstlisting}[style=cypher,
+                   caption={Example graph query (placeholder).},
+                   label=lst:cypher]
+// Retrieve candidate causers for an incident
+MATCH (i:Incident {id: $incidentId})-[:AFFECTS]->(p:Part)<-[:SUPPLIES]-(s:Supplier)
+RETURN s.name AS candidate, count(p) AS evidence
+ORDER BY evidence DESC
+LIMIT 5
+\end{lstlisting}
