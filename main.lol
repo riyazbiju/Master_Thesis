@@ -6,7 +6,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Example graph query (placeholder).}}{21}{lstlisting.5.1}%
+\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Example graph query (placeholder).}}{20}{lstlisting.5.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

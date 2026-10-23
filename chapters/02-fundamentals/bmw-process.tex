@@ -17,7 +17,8 @@ level before each stage is described in detail.
 \begin{minipage}{\textwidth}
 \centering
 \begin{tikzpicture}[
-  node distance=0.6cm and 1.2cm,
+  scale=0.82, transform shape,
+  node distance=0.45cm and 1.2cm,
   process/.style={
     rectangle, rounded corners, draw=black, thick,
     minimum width=7cm, minimum height=1.1cm,
@@ -54,8 +55,8 @@ level before each stage is described in detail.
 \draw[arrow] (describe) -- (qi);
 \draw[arrow] (qi) -- (evidence);
 \draw[arrow] (evidence) -- (decision);
-\draw[arrow] (decision.west) -- ++(-0.6,0) |- node[lbl, pos=0.75, above] {supplier} (supplier.north);
-\draw[arrow] (decision.east) -- ++(0.6,0) |- node[lbl, pos=0.75, above] {internal} (internal.north);
+\draw[arrow] (decision.south) -- ++(0,-0.45) -| node[lbl, pos=0.2, above] {supplier} (supplier.north);
+\draw[arrow] (decision.south) -- ++(0,-0.45) -| node[lbl, pos=0.2, above] {internal} (internal.north);
 
 \end{tikzpicture}
 \captionsetup{type=figure}
@@ -380,14 +381,42 @@ before, the completion of D4 (root-cause analysis), since protecting the
 customer and the production process cannot wait until the root cause is
 fully understood.
 
+In practice, each QI is assigned a priority level, and the eight
+disciplines are governed by corresponding target timelines that differ
+between high- and low-priority cases.
+% TODO: confirm the exact priority levels/terminology and timeline
+% structure with the industry supervisor -- unclear in the source
+% recording.
+
+The cross-functional team formed under D1 typically draws on the roles
+introduced in Section~\ref{sec:fund_bmw_roles}: the responsible quality
+engineer coordinates the investigation, while representatives from
+production, assembly, and, where relevant, the supplier contribute the
+domain-specific knowledge needed to describe the problem, contain it, and
+identify its root cause.
+
+The 8D reports generated through this process also complement the
+historical lookup described in Section~\ref{sec:fund_bmw_lookup}: whereas
+that lookup retrieves comparable past QIs based on supplier, part, and
+VFC attributes, an attached 8D report reveals not only that a comparable
+incident existed, but how it was investigated and resolved, and through
+which discipline-specific findings.
+
 Each discipline is documented with a responsible owner, supporting
 evidence, and a completion date. This staged documentation means that an
 8D report's evidentiary value depends on how far the investigation had
 progressed at the time it is reviewed: a report that is still open may
 contain only a preliminary problem description and containment action,
 whereas a closed report additionally documents a verified root cause and
-validated corrective actions. Table~\ref{tab:8d_disciplines} summarizes
-the eight disciplines reviewed for this thesis.
+validated corrective actions.
+
+For the purposes of this thesis, this discipline structure matters because
+an 8D report is not a single, undifferentiated text block: each discipline
+corresponds to a distinct, dated piece of evidence, such as a problem
+description, a containment action, or a verified root cause, that can in
+principle be linked to the underlying QI as a separate item of evidence
+rather than treated as one opaque document. Table~\ref{tab:8d_disciplines}
+summarizes the eight disciplines reviewed for this thesis.
 
 \begin{minipage}{\textwidth}
 \centering
@@ -448,13 +477,6 @@ the eight disciplines reviewed for this thesis.
 \end{tabular}
 \end{minipage}
 \vspace{\baselineskip}
-
-In practice, each QI is assigned a priority level, and the eight
-disciplines are governed by corresponding target timelines that differ
-between high- and low-priority cases.
-% TODO: confirm the exact priority levels/terminology and timeline
-% structure with the industry supervisor -- unclear in the source
-% recording.
 
 For causer attribution, the 8D process is particularly relevant because
 its disciplines produce different forms of historical evidence: D2

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.12)  20 OCT 2026 10:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.12)  20 OCT 2026 10:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1686,51 +1686,51 @@ chapter 2.
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
-5.
+6.
 
 (C:\Users\riya2\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [8{C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc
 }]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 131.
+(Font)              <7> on input line 132.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 131.
+(Font)              <5> on input line 132.
 
-Underfull \hbox (badness 4291) in paragraph at lines 139--139
+Underfull \hbox (badness 4291) in paragraph at lines 140--140
 []\T1/lmr/m/n/10 Affected com-po-nent or func-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--141
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
 []\T1/lmr/m/n/10 Door trim, am-bi-ent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--147
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 []\T1/lmr/m/n/10 Corresponding door-
  []
 
-[9] [10{C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.e
-nc}] [11] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 421--421
+[9{C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
+[10] [11] [12] [13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []\T1/lmr/m/n/10 Determine and Ver-ify
  []
 
-[15] [16]) (chapters/02-fundamentals/knowledge-graphs.tex)
-(chapters/02-fundamentals/explainable-ai.tex [17]))
-(chapters/03-related-work/related-work.tex [18]
+[15]) (chapters/02-fundamentals/knowledge-graphs.tex)
+(chapters/02-fundamentals/explainable-ai.tex [16]))
+(chapters/03-related-work/related-work.tex [17]
 chapter 3.
 (chapters/03-related-work/causer-attribution-rca.tex)
 (chapters/03-related-work/research-gap.tex))
-(chapters/04-problem-formulation/problem-formulation.tex [19
+(chapters/04-problem-formulation/problem-formulation.tex [18
 
 
 ]
 chapter 4.
 (chapters/04-problem-formulation/formal-problem-definition.tex)
 (chapters/04-problem-formulation/data-sources-graph-schema.tex))
-(chapters/05-method/method.tex [20
+(chapters/05-method/method.tex [19
 
 
 ]
@@ -1740,14 +1740,14 @@ chapter 5.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 9.
 ))
-(chapters/06-experimental-setup/experimental-setup.tex [21
+(chapters/06-experimental-setup/experimental-setup.tex [20
 
 
 ]
 chapter 6.
 (chapters/06-experimental-setup/baselines.tex)
 (chapters/06-experimental-setup/evaluation-metrics.tex))
-(chapters/07-results/results.tex [22
+(chapters/07-results/results.tex [21
 
 
 ]
@@ -1755,26 +1755,26 @@ chapter 7.
 (chapters/07-results/quantitative-results.tex)
 (chapters/07-results/qualitative-analysis.tex)
 (chapters/07-results/limitations.tex)) (chapters/08-conclusion/conclusion.tex
-[23
+[22
 
 
 ]
 chapter 8.
 (chapters/08-conclusion/conclusion-section.tex)
 (chapters/08-conclusion/future-work.tex))
-(chapters/appendix/additional-tables.tex [24
+(chapters/appendix/additional-tables.tex [23
 
 
 ]
 chapter A.
-) [25
+) [24
 
 
 ] (main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [26
+ [25
 
 
 
@@ -1783,7 +1783,7 @@ chapter A.
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [27
+ [26
 
 
 ] (main.lol)
@@ -1794,17 +1794,17 @@ chapter A.
 
 LaTeX Warning: Empty bibliography on input line 366.
 
+[27
+
+
+]
+chapter without number
 [28
 
 
 ]
 chapter without number
 [29
-
-
-]
-chapter without number
-[30
 
 
 ] (main.aux)
@@ -1821,10 +1821,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41301 strings out of 467871
- 835311 string characters out of 5418375
- 1822574 words of memory out of 5000000
- 69319 multiletter control sequences out of 15000+600000
+ 41303 strings out of 467871
+ 835368 string characters out of 5418375
+ 1822573 words of memory out of 5000000
+ 69322 multiletter control sequences out of 15000+600000
  711170 words of font info for 107 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  108i,20n,107p,11209b,2388s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1842,9 +1842,9 @@ b><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb
 <C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb>
 <C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
 
-Output written on main.pdf (38 pages, 447524 bytes).
+Output written on main.pdf (37 pages, 447862 bytes).
 PDF statistics:
- 569 PDF objects out of 1000 (max. 8388607)
- 112 named destinations out of 1000 (max. 500000)
+ 567 PDF objects out of 1000 (max. 8388607)
+ 111 named destinations out of 1000 (max. 500000)
  378 words of extra memory for PDF output out of 10000 (max. 10000000)
 
