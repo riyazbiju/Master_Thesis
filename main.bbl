@@ -16,5 +16,234 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{ji2021survey}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=4b91617610b752335c86ab514a76af26}{%
+           family={Ji},
+           familyi={J\bibinitperiod},
+           given={Shaoxiong},
+           giveni={S\bibinitperiod}}}%
+        {{hash=019bcbde9904047f7c02c1ae64e1d46e}{%
+           family={Pan},
+           familyi={P\bibinitperiod},
+           given={Shirui},
+           giveni={S\bibinitperiod}}}%
+        {{hash=db089768b8819956d932b3c8db18d498}{%
+           family={Cambria},
+           familyi={C\bibinitperiod},
+           given={Erik},
+           giveni={E\bibinitperiod}}}%
+        {{hash=cd2611aa273065279bec7348c5e6bb56}{%
+           family={Marttinen},
+           familyi={M\bibinitperiod},
+           given={Pekka},
+           giveni={P\bibinitperiod}}}%
+        {{hash=ed7b2de2f08bfa6638d5d174d55d839b}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Philip\bibnamedelima S.},
+           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{6c188ff928273e4adaac4fa6c8dba144}
+      \strng{fullhash}{a77a518b260332be2da4dc8681d8c69e}
+      \strng{fullhashraw}{a77a518b260332be2da4dc8681d8c69e}
+      \strng{bibnamehash}{6c188ff928273e4adaac4fa6c8dba144}
+      \strng{authorbibnamehash}{6c188ff928273e4adaac4fa6c8dba144}
+      \strng{authornamehash}{6c188ff928273e4adaac4fa6c8dba144}
+      \strng{authorfullhash}{a77a518b260332be2da4dc8681d8c69e}
+      \strng{authorfullhashraw}{a77a518b260332be2da4dc8681d8c69e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Neural Networks and Learning Systems}
+      \field{number}{2}
+      \field{title}{A Survey on Knowledge Graphs: Representation, Acquisition, and Applications}
+      \field{volume}{33}
+      \field{year}{2022}
+      \field{pages}{494\bibrangedash 514}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1109/TNNLS.2021.3070843
+      \endverb
+    \endentry
+    \entry{wang2017kgesurvey}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=e2068259fc5297e154f92a417136c922}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Quan},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=dd2b0f5b4fe73348f6c0b8fdfe0ce772}{%
+           family={Mao},
+           familyi={M\bibinitperiod},
+           given={Zhendong},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=dc58cd6a24a023ce7177d8f199d47875}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Bin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=cbbe0aee45b05ee2e216204167adfdac}{%
+           family={Guo},
+           familyi={G\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{fullhash}{c9468d4be8f286ca970a8c0e0cc5de45}
+      \strng{fullhashraw}{c9468d4be8f286ca970a8c0e0cc5de45}
+      \strng{bibnamehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{authorbibnamehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{authornamehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{authorfullhash}{c9468d4be8f286ca970a8c0e0cc5de45}
+      \strng{authorfullhashraw}{c9468d4be8f286ca970a8c0e0cc5de45}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Knowledge and Data Engineering}
+      \field{number}{12}
+      \field{title}{Knowledge Graph Embedding: A Survey of Approaches and Applications}
+      \field{volume}{29}
+      \field{year}{2017}
+      \field{pages}{2724\bibrangedash 2743}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1109/TKDE.2017.2754499
+      \endverb
+    \endentry
+    \entry{rossi2021comparative}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=0003cc026f9355b440a2376232f65392}{%
+           family={Rossi},
+           familyi={R\bibinitperiod},
+           given={Andrea},
+           giveni={A\bibinitperiod}}}%
+        {{hash=b502a62fcd47c34d504e56e9d5615b0e}{%
+           family={Barbosa},
+           familyi={B\bibinitperiod},
+           given={Denilson},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c1a61e6f15c640ee64e2fc4624b943e2}{%
+           family={Firmani},
+           familyi={F\bibinitperiod},
+           given={Donatella},
+           giveni={D\bibinitperiod}}}%
+        {{hash=3f0772e7d8fd0ae241a9b633b871f8d3}{%
+           family={Matinata},
+           familyi={M\bibinitperiod},
+           given={Antonio},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e0a3c470d0dfa0a1b281a88b9aac3696}{%
+           family={Merialdo},
+           familyi={M\bibinitperiod},
+           given={Paolo},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{3972c5f31977ccd3dd4f010076fabba5}
+      \strng{fullhash}{f7ea74cdb9848fbf652f043c537233c5}
+      \strng{fullhashraw}{f7ea74cdb9848fbf652f043c537233c5}
+      \strng{bibnamehash}{3972c5f31977ccd3dd4f010076fabba5}
+      \strng{authorbibnamehash}{3972c5f31977ccd3dd4f010076fabba5}
+      \strng{authornamehash}{3972c5f31977ccd3dd4f010076fabba5}
+      \strng{authorfullhash}{f7ea74cdb9848fbf652f043c537233c5}
+      \strng{authorfullhashraw}{f7ea74cdb9848fbf652f043c537233c5}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Knowledge Discovery from Data}
+      \field{number}{2}
+      \field{title}{Knowledge Graph Embedding for Link Prediction: A Comparative Analysis}
+      \field{volume}{15}
+      \field{year}{2021}
+      \field{pages}{1\bibrangedash 49}
+      \range{pages}{49}
+      \verb{doi}
+      \verb 10.1145/3424672
+      \endverb
+    \endentry
+    \entry{teru2020grail}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=d9b37fbe0fe2d4019e2a137329150816}{%
+           family={Teru},
+           familyi={T\bibinitperiod},
+           given={Komal\bibnamedelima K.},
+           giveni={K\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=7eda388a9524f202d69218f0cf5e5581}{%
+           family={Denis},
+           familyi={D\bibinitperiod},
+           given={Etienne\bibnamedelima G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=2abce6c40b4cc1a3d89f175883b24536}{%
+           family={Hamilton},
+           familyi={H\bibinitperiod},
+           given={William\bibnamedelima L.},
+           giveni={W\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{fullhash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{fullhashraw}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{bibnamehash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{authorbibnamehash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{authornamehash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{authorfullhash}{bb28127f0621e4bb17f8e5610fdc8779}
+      \strng{authorfullhashraw}{bb28127f0621e4bb17f8e5610fdc8779}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 37th International Conference on Machine Learning}
+      \field{series}{Proceedings of Machine Learning Research}
+      \field{title}{Inductive Relation Prediction by Subgraph Reasoning}
+      \field{volume}{119}
+      \field{year}{2020}
+      \field{pages}{9448\bibrangedash 9457}
+      \range{pages}{10}
+    \endentry
+    \entry{galkin2022ilpc}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=2ffca2546f431ae490d79fa12f9f659d}{%
+           family={Galkin},
+           familyi={G\bibinitperiod},
+           given={Mikhail},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6ec3ce0d2dc8a140b0149388c64dfa78}{%
+           family={Berrendorf},
+           familyi={B\bibinitperiod},
+           given={Max},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5161c2f1a604208b5e9f95441d6546cb}{%
+           family={Hoyt},
+           familyi={H\bibinitperiod},
+           given={Charles\bibnamedelima Tapley},
+           giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{fullhash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{fullhashraw}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{bibnamehash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{authorbibnamehash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{authornamehash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{authorfullhash}{57d98106d7c1abea5151af73ba30cf4e}
+      \strng{authorfullhashraw}{57d98106d7c1abea5151af73ba30cf4e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Workshop on Graph Learning Benchmarks, The Web Conference (WWW)}
+      \field{eprinttype}{arXiv}
+      \field{title}{An Open Challenge for Inductive Link Prediction on Knowledge Graphs}
+      \field{year}{2022}
+      \verb{eprint}
+      \verb 2203.01520
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.12)  20 OCT 2026 10:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.12)  23 OCT 2026 11:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1717,20 +1717,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []\T1/lmr/m/n/10 Determine and Ver-ify
  []
 
-[15]) (chapters/02-fundamentals/knowledge-graphs.tex)
-(chapters/02-fundamentals/explainable-ai.tex [16]))
-(chapters/03-related-work/related-work.tex [17]
+[15]) (chapters/02-fundamentals/knowledge-graphs.tex [16] [17] [18] [19])
+(chapters/02-fundamentals/explainable-ai.tex))
+(chapters/03-related-work/related-work.tex [20] [21]
 chapter 3.
 (chapters/03-related-work/causer-attribution-rca.tex)
 (chapters/03-related-work/research-gap.tex))
-(chapters/04-problem-formulation/problem-formulation.tex [18
+(chapters/04-problem-formulation/problem-formulation.tex [22
 
 
 ]
 chapter 4.
 (chapters/04-problem-formulation/formal-problem-definition.tex)
 (chapters/04-problem-formulation/data-sources-graph-schema.tex))
-(chapters/05-method/method.tex [19
+(chapters/05-method/method.tex [23
 
 
 ]
@@ -1740,14 +1740,14 @@ chapter 5.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 9.
 ))
-(chapters/06-experimental-setup/experimental-setup.tex [20
+(chapters/06-experimental-setup/experimental-setup.tex [24
 
 
 ]
 chapter 6.
 (chapters/06-experimental-setup/baselines.tex)
 (chapters/06-experimental-setup/evaluation-metrics.tex))
-(chapters/07-results/results.tex [21
+(chapters/07-results/results.tex [25
 
 
 ]
@@ -1755,26 +1755,26 @@ chapter 7.
 (chapters/07-results/quantitative-results.tex)
 (chapters/07-results/qualitative-analysis.tex)
 (chapters/07-results/limitations.tex)) (chapters/08-conclusion/conclusion.tex
-[22
+[26
 
 
 ]
 chapter 8.
 (chapters/08-conclusion/conclusion-section.tex)
 (chapters/08-conclusion/future-work.tex))
-(chapters/appendix/additional-tables.tex [23
+(chapters/appendix/additional-tables.tex [27
 
 
 ]
 chapter A.
-) [24
+) [28
 
 
 ] (main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [25
+ [29
 
 
 
@@ -1783,28 +1783,29 @@ chapter A.
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [26
+ [30
 
 
 ] (main.lol)
 \tf@lol=\write8
 \openout8 = `main.lol'.
 
-
-
-LaTeX Warning: Empty bibliography on input line 366.
-
-[27
+ [31
 
 
 ]
 chapter without number
-[28
+[32
 
 
 ]
 chapter without number
-[29
+[33
+
+
+]
+chapter without number
+[34
 
 
 ] (main.aux)
@@ -1821,30 +1822,32 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41303 strings out of 467871
- 835368 string characters out of 5418375
- 1822573 words of memory out of 5000000
- 69322 multiletter control sequences out of 15000+600000
- 711170 words of font info for 107 fonts, out of 8000000 for 9000
+ 41560 strings out of 467871
+ 840901 string characters out of 5418375
+ 1823164 words of memory out of 5000000
+ 69563 multiletter control sequences out of 15000+600000
+ 716953 words of font info for 109 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  108i,20n,107p,11209b,2388s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.p
-fb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.p
-fb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pf
-b><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb
-><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb>
-<C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C
-:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C
-:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><C
-:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb>
-<C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb>
-<C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
-
-Output written on main.pdf (37 pages, 447862 bytes).
+fb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.
+pfb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.
+pfb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.p
+fb><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pf
+b><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb
+><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><
+C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><
+C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><
+C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb
+><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb
+><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb
+><C:/Users/riya2/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb
+>
+Output written on main.pdf (42 pages, 519584 bytes).
 PDF statistics:
- 567 PDF objects out of 1000 (max. 8388607)
- 111 named destinations out of 1000 (max. 500000)
- 378 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 649 PDF objects out of 1000 (max. 8388607)
+ 125 named destinations out of 1000 (max. 500000)
+ 410 words of extra memory for PDF output out of 10000 (max. 10000000)
 

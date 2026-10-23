@@ -19,32 +19,36 @@
 \contentsline {subsection}{\numberline {2.1.7}Roles in the Quality Process}{13}{subsection.2.1.7}%
 \contentsline {subsection}{\numberline {2.1.8}Supplier Complaints and the 8D Process}{14}{subsection.2.1.8}%
 \contentsline {subsection}{\numberline {2.1.9}Summary}{16}{subsection.2.1.9}%
-\contentsline {section}{\numberline {2.2}Knowledge Graphs}{17}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Explainable Artificial Intelligence}{17}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Related Work}{18}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Root-Cause and Causer Attribution in Manufacturing Quality}{18}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Research Gap}{18}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Problem Formulation and Data}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Formal Problem Definition}{19}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Data Sources and Graph Schema}{19}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Method}{20}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Model Architecture}{20}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Explanation Generation}{20}{section.5.2}%
-\contentsline {chapter}{\numberline {6}Experimental Setup}{21}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Baselines}{21}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Evaluation Metrics}{21}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Results and Discussion}{22}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Quantitative Results}{22}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Qualitative Analysis of Explanations}{22}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitations and Threats to Validity}{22}{section.7.3}%
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{23}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Conclusion}{23}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Future Work}{23}{section.8.2}%
+\contentsline {section}{\numberline {2.2}Knowledge Graphs and Link Prediction}{17}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Knowledge Graph Completion and Link Prediction}{18}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Transductive and Inductive Link Prediction}{19}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Relevance to the Proposed Methodology}{20}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Explainable Artificial Intelligence}{21}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Related Work}{22}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Root-Cause and Causer Attribution in Manufacturing Quality}{22}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Research Gap}{22}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Problem Formulation and Data}{23}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Formal Problem Definition}{23}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Data Sources and Graph Schema}{23}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Method}{24}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Model Architecture}{24}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Explanation Generation}{24}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Experimental Setup}{25}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Baselines}{25}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Evaluation Metrics}{25}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Results and Discussion}{26}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Quantitative Results}{26}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Qualitative Analysis of Explanations}{26}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitations and Threats to Validity}{26}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{27}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Conclusion}{27}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Future Work}{27}{section.8.2}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Additional Tables}{24}{appendix.A}%
-\contentsline {chapter}{\nonumberline List of Figures}{25}{chapter*.16}%
-\contentsline {chapter}{\nonumberline List of Tables}{26}{chapter*.17}%
-\contentsline {chapter}{\nonumberline Listings}{27}{chapter*.18}%
-\contentsline {chapter}{\nonumberline Declaration of Authorship}{28}{chapter*.19}%
-\contentsline {chapter}{\nonumberline Consent to Plagiarism Check}{29}{chapter*.20}%
+\contentsline {chapter}{\numberline {A}Additional Tables}{28}{appendix.A}%
+\contentsline {chapter}{\nonumberline List of Figures}{29}{chapter*.16}%
+\contentsline {chapter}{\nonumberline List of Tables}{30}{chapter*.17}%
+\contentsline {chapter}{\nonumberline Listings}{31}{chapter*.18}%
+\contentsline {chapter}{\nonumberline Bibliography}{32}{chapter*.19}%
+\contentsline {chapter}{\nonumberline Declaration of Authorship}{33}{chapter*.20}%
+\contentsline {chapter}{\nonumberline Consent to Plagiarism Check}{34}{chapter*.21}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
