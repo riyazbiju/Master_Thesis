@@ -53,6 +53,20 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning}
 
+% Top-align floats on pages that contain only a float (default LaTeX
+% centers them vertically via stretchable glue before/after, which leaves
+% large blank margins above a lone full-page figure or table).
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+% Allow a tall float to still share a page with the text that follows it.
+% Default \topfraction (0.7) forces a float occupying more of the page
+% than that onto a floats-only page, leaving the remaining space below it
+% blank instead of letting body text flow in underneath.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\floatpagefraction}{0.8}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Code listings & colours
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -258,69 +272,81 @@ members of the examination board. This restriction applies for a period of
 TODO years from the date of submission.
 
 %% ---------------- Abstracts ----------------
-% DRAFT -- written from the thesis proposal / one-pager before experiments were
-% run. TODO: once results exist, replace the result sentence with an actual
-% number (Hits@k / MRR / coverage gain) and re-check the word count (200-300).
+% DRAFT -- reframed 2026-10-27 to semi-inductive link prediction / SQ1-SQ3
+% framing per supervisor correction notes. TODO: once results exist, replace
+% the result sentence with actual numbers per novelty level and re-check the
+% word count (200-300).
 \addchap*{Abstract}
-When a defect is detected in automotive production, quality engineers must
-identify its causer -- a supplier or an internal unit -- to route the case
-correctly, for example into the 8D problem-solving process. At BMW Group,
-this causer attribution today relies on exact-match lookup across defect
-type, defect place, defect location and material number against historical
-repair records. This process fails whenever no identical historical case
-exists, ignores near-miss evidence, and is slow to execute manually,
-leading to wrong bookings, misdirected 8D processes and supplier disputes.
-This thesis reformulates causer attribution as an explainable link
-prediction task on a knowledge graph: given a new incident node, the goal
-is to predict the missing edge to its causer. A knowledge graph is
-constructed from BMW's quality notification, inspection and rework data
-(Qcube/SAP), connecting incidents, reworks and inspections through shared
-defect, material and cost-centre nodes. Three families of attribution
-models are compared on this graph: a rule-based baseline that mirrors the
-current manual process, knowledge graph embeddings (TransE, ComplEx), and
-a relational graph neural network (R-GCN) that aggregates each incident's
-neighbourhood for prediction. Every prediction is accompanied by
-path-based evidence from historical cases, and a locally hosted large
-language model narrates this evidence in natural language without making
-predictions itself, keeping the explanation audit-ready for quality
-engineers. TODO: state the key quantitative result (e.g.\ Hits@\(k\), MRR
-or coverage gain over the rule-based baseline) once available. The
-findings indicate [TODO] and demonstrate [TODO -- significance for
-quality management practice at BMW and, more broadly, for explainable
-link prediction on event-centric industrial knowledge graphs].
+When a defect is identified in automotive production, the quality front desk
+must decide within minutes who caused it: a supplier or an internal unit. This
+first decision starts the entire follow-up process, including the supplier
+complaint and the 8D problem-solving process. At BMW Group, the decision is
+supported by an exact-match search over the defect type, defect place, defect
+location, part number and supplier, and it is confirmed only weeks later, when
+the supplier acknowledges or rejects responsibility in the 8D. When no
+identical historical case exists, the search returns nothing, near-miss cases
+contribute no evidence, and wrong first decisions lead to misdirected 8D
+processes, supplier disputes and avoidable cost.
+This thesis formulates first-call causer attribution as semi-inductive link
+prediction on an event-centric knowledge graph built from BMW's quality
+notification, inspection and rework data: each new incident is an unseen node
+connected to known defect, part, supplier and rework nodes, and the task is to
+predict its missing \texttt{CAUSED\_BY} link. Three model families are
+compared: a rule-based baseline that reproduces the current exact-match
+search, knowledge graph embeddings (TransE, ComplEx) and a relational graph
+convolutional network (R-GCN). Test incidents are grouped into novelty levels,
+from incidents with an exact historical match to incidents whose attribute
+combination has never been observed. For each family, the thesis measures
+both predictive performance and the faithfulness of its explanations, using a
+shared protocol that tests whether the cited evidence is necessary and
+sufficient for the prediction.
+% TODO keep the next sentence only if the synthetic dataset survives the
+% code-freeze cut
+The findings are validated on a synthetic event-centric graph with planted
+causer rules, where the true explanation of every prediction is known.
+% TODO results
+TODO: key quantitative results per novelty level (accuracy and fidelity) and
+the main conclusion for early causer attribution at BMW.
 
 \begin{otherlanguage}{ngerman}
 \addchap*{Zusammenfassung}
-% DRAFT -- deutsche Fassung des Abstracts, vor Durchführung der Experimente
-% verfasst. TODO: nach Vorliegen der Ergebnisse das Ergebnis mit konkreter
-% Zahl ergänzen und die Wortzahl (200-300) prüfen.
-Wird in der Fahrzeugproduktion ein Fehler festgestellt, müssen
-Qualitätsingenieure den Verursacher -- einen Lieferanten oder eine interne
-Einheit -- identifizieren, um den Fall korrekt weiterzuleiten, etwa in den
-8D-Problemlösungsprozess. Bei der BMW Group basiert diese
-Verursacherzuordnung heute auf einem exakten Abgleich von Fehlerart,
-Fehlerort, Fehlerstelle und Materialnummer mit historischen
-Reparaturdatensätzen. Dieser Prozess versagt, wenn kein identischer
-historischer Fall existiert, berücksichtigt keine Fast-Treffer als Hinweis
-und ist in der manuellen Durchführung langsam -- mit der Folge von
-Fehlbuchungen, falsch adressierten 8D-Prozessen und Lieferantenstreitigkeiten.
-Diese Arbeit formuliert die Verursacherzuordnung als erklärbare
-Link-Prediction-Aufgabe auf einem Knowledge Graph: Für einen neuen
-Vorfallsknoten soll die fehlende Kante zu seinem Verursacher vorhergesagt
-werden. Ein Knowledge Graph wird aus den Qualitätsmeldungs-, Prüf- und
-Nacharbeitsdaten (Qcube/SAP) der BMW Group aufgebaut und verbindet
-Vorfälle, Nacharbeiten und Prüfungen über gemeinsame Fehler-, Material-
-und Kostenstellenknoten. Drei Modellfamilien zur Verursacherzuordnung
-werden auf diesem Graphen verglichen: eine regelbasierte Baseline, die den
-aktuellen manuellen Prozess abbildet, Knowledge-Graph-Embeddings (TransE,
-ComplEx) sowie ein relationales Graph Neural Network (R-GCN), das die
-Nachbarschaft jedes Vorfalls für die Vorhersage aggregiert. Jede Vorhersage
-wird durch pfadbasierte Evidenz aus historischen Fällen begründet; ein
-lokal betriebenes Sprachmodell verbalisiert diese Evidenz in natürlicher
-Sprache, ohne selbst Vorhersagen zu treffen, sodass die Erklärung für
-Qualitätsingenieure prüfbar bleibt. TODO: zentrales quantitatives Ergebnis
-(z.\,B. Hits@\(k\), MRR oder Abdeckungsgewinn gegenüber der regelbasierten
-Baseline) ergänzen, sobald verfügbar.
+% DRAFT -- deutsche Fassung, umformuliert am 27.10.2026 gemaess
+% Betreuer-Korrektur auf semi-induktive Link Prediction / SQ1-SQ3.
+% TODO: nach Vorliegen der Ergebnisse konkrete Zahlen ergaenzen und die
+% Wortzahl (200-300) pruefen.
+Wird in der Fahrzeugproduktion ein Fehler festgestellt, muss der
+Qualitäts-Frontdesk innerhalb weniger Minuten entscheiden, wer ihn
+verursacht hat: ein Lieferant oder eine interne Einheit. Diese erste
+Entscheidung stößt den gesamten Folgeprozess an, einschließlich der
+Lieferantenreklamation und des 8D-Prozesses. Bei der BMW Group wird sie durch
+einen exakten Abgleich von Fehlerart, Fehlerort, Fehlerstelle, Teilenummer und
+Lieferant unterstützt und erst Wochen später bestätigt, wenn der
+Lieferant im 8D-Prozess die Verantwortung anerkennt oder ablehnt. Existiert
+kein identischer historischer Fall, liefert die Suche kein Ergebnis,
+ähnliche Fälle bleiben ungenutzt, und falsche Erstentscheidungen führen
+zu fehlgeleiteten 8D-Prozessen, Lieferantenstreitigkeiten und vermeidbaren
+Kosten.
+Diese Arbeit formuliert die Verursacherzuordnung zum Zeitpunkt der
+Erstentscheidung als semi-induktive Link Prediction auf einem
+ereigniszentrierten Knowledge Graph, der aus Qualitätsmeldungs-, Prüf- und
+Nacharbeitsdaten der BMW Group aufgebaut ist: Jeder neue Vorfall ist ein
+unbekannter Knoten, der mit bekannten Fehler-, Teile-, Lieferanten- und
+Nacharbeitsknoten verbunden ist; vorhergesagt wird die fehlende
+\texttt{CAUSED\_BY}-Kante. Verglichen werden drei Modellfamilien: eine
+regelbasierte Baseline, die die heutige exakte Suche nachbildet,
+Knowledge-Graph-Embeddings (TransE, ComplEx) sowie ein relationales Graph
+Convolutional Network (R-GCN). Die Testvorfälle werden nach Neuheitsgrad
+gruppiert, von Vorfällen mit exaktem historischem Gegenstück bis zu
+Vorfällen mit bisher nie beobachteter Merkmalskombination. Für jede
+Modellfamilie werden die Vorhersagegüte und die Treue (Faithfulness) der
+Erklärungen gemessen, mit einem einheitlichen Protokoll, das prüft, ob die
+angeführte Evidenz für die Vorhersage notwendig und hinreichend ist.
+% TODO nur behalten, falls der synthetische Datensatz erhalten bleibt
+Die Ergebnisse werden auf einem synthetischen ereigniszentrierten Graphen mit
+eingebetteten Verursacherregeln überprüft, bei dem die wahre Erklärung
+jeder Vorhersage bekannt ist.
+% TODO results
+TODO: zentrale Ergebnisse je Neuheitsgrad ergänzen.
 \end{otherlanguage}
 
 %% ---------------- Acknowledgements ----------------
@@ -363,7 +389,8 @@ TODO
 \listoftables
 \lstlistoflistings  % scrhack + listof=totoc add this to the TOC automatically
 
-\printbibliography  % added to TOC via class option bibliography=totoc
+\printbibliography[notkeyword=internal]  % added to TOC via class option bibliography=totoc
+\printbibliography[keyword=internal, title={Internal BMW Documents}]
 
 %% ---------------- Declarations ----------------
 % TODO: translated from the standard THWS German wording -- confirm with

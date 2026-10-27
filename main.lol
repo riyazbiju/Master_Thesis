@@ -6,11 +6,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Example graph query (placeholder).}}{24}{lstlisting.5.1}%
+\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Example graph query (placeholder).}}{27}{lstlisting.5.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \def \@chapapp {\appendixname }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -14,11 +14,11 @@ the supplier complaint and 8D process (Section~\ref{sec:fund_bmw_8d}).
 Figure~\ref{fig:bmw_process_overview} summarizes this process at a high
 level before each stage is described in detail.
 
-\begin{minipage}{\textwidth}
+\begin{figure}[tbp]
 \centering
 \begin{tikzpicture}[
-  scale=0.82, transform shape,
-  node distance=0.45cm and 1.2cm,
+  scale=0.68, transform shape,
+  node distance=0.4cm and 1.0cm,
   process/.style={
     rectangle, rounded corners, draw=black, thick,
     minimum width=7cm, minimum height=1.1cm,
@@ -34,14 +34,22 @@ level before each stage is described in detail.
     minimum width=4.6cm, minimum height=1.2cm,
     align=center, font=\small, inner sep=4pt
   },
+  predmark/.style={
+    rectangle, draw=black, thick, rounded corners,
+    font=\bfseries\small, inner sep=3pt
+  },
   lbl/.style={font=\scriptsize},
   arrow/.style={-{Latex[length=2mm]}, thick}
 ]
 
-\node[process] (detect) {Defect Detected\\\footnotesize(IPS-Q via MQC)};
+\node[process] (detect) {Defect Identified at Inspection\\\footnotesize(IPS-Q via MQC)};
 \node[process, below=of detect] (describe)
   {Defect Described via VFC\\\footnotesize(Defect Type, Place, Location)};
-\node[process, below=of describe] (qi)
+\node[process, below=of describe] (firstdec)
+  {First Causer Decision\\\footnotesize(verbal; recorded as initial allocation in MQC)};
+\node[predmark, right=1.0cm of firstdec] (predlbl) {prediction point};
+\draw[-{Latex[length=1.5mm]}, thin] (predlbl.west) -- (firstdec.east);
+\node[process, below=of firstdec] (qi)
   {Quality Incident (QI) Created\\\footnotesize(if formal investigation required)};
 \node[process, below=of qi] (evidence)
   {Historical Evidence Reviewed\\\footnotesize(exact-match lookup, inspection, sorting, rework)};
@@ -50,32 +58,43 @@ level before each stage is described in detail.
   {Supplier Complaint\\\footnotesize\& 8D Process};
 \node[outcome, below right=1.6cm and -0.3cm of decision] (internal)
   {Internal Investigation\\\footnotesize(Assembly, Logistics, Parts Quality)};
+\node[decision, below=1.0cm of supplier] (ack)
+  {Supplier Acknowledges\\Responsibility?};
+\node[outcome, below=1.0cm of ack] (confirmed)
+  {Supplier Causer\\Confirmed};
 
 \draw[arrow] (detect) -- (describe);
-\draw[arrow] (describe) -- (qi);
+\draw[arrow] (describe) -- (firstdec);
+\draw[arrow] (firstdec) -- (qi);
 \draw[arrow] (qi) -- (evidence);
 \draw[arrow] (evidence) -- (decision);
 \draw[arrow] (decision.south) -- ++(0,-0.45) -| node[lbl, pos=0.2, above] {supplier} (supplier.north);
 \draw[arrow] (decision.south) -- ++(0,-0.45) -| node[lbl, pos=0.2, above] {internal} (internal.north);
+\draw[arrow] (supplier) -- (ack);
+\draw[arrow] (ack.south) -- node[lbl, right] {yes} (confirmed.north);
+\draw[arrow] (ack.east) -| node[lbl, pos=0.35, above] {no} (internal.south);
 
 \end{tikzpicture}
-\captionsetup{type=figure}
-\captionof{figure}{Overview of BMW's current quality-incident and
-  causer-attribution process, synthesized from
-  Sections~\ref{sec:fund_bmw_detection}--\ref{sec:fund_bmw_8d}.}
+\caption{Overview of BMW's quality-incident and
+  causer-attribution process. The first causer decision is made within
+  minutes of detection (prediction point); supplier responsibility is
+  confirmed only later through the supplier's acknowledgement in the 8D
+  process, and a rejection returns the incident to internal investigation.}
 \label{fig:bmw_process_overview}
-\end{minipage}
-\vspace{\baselineskip}
+\end{figure}
 
 \subsection{Defect Detection and Recording}\label{sec:fund_bmw_detection}
 
-The process begins when a defect is detected during production,
-inspection, or rework. A defect may concern, for example, the appearance,
-function, condition, installation, or completeness of a component. The
-\textbf{International Production System for Quality (IPS-Q)} provides the
-production-side context for defects and rework records. Internal material
-identifies \textbf{Modern Quality Capturing (MQC)} as the mobile IPS-Q
-application used for defect recording and initial causer allocation.
+The process begins when a defect is identified, typically at an inspection
+point in production; defects may also surface during rework. A defect may
+concern, for example, the appearance, function, condition, installation,
+or completeness of a component. The \textbf{International Production
+System for Quality (IPS-Q)} provides the production-side context for
+defects and rework records. \textbf{Modern Quality Capturing (MQC)} is the
+mobile IPS-Q application used for defect recording and for the initial
+causer allocation~\cite{bmwint_mqc}. This initial allocation is the first
+causer decision on which this thesis focuses
+(Section~\ref{sec:causer-attribution}).
 
 A defect record may contain the affected material, supplier, plant,
 vehicle, detection time, a textual problem description, and standardized
@@ -107,6 +126,8 @@ precisely.
 To describe defects consistently, BMW uses a standardized fault coding
 scheme referred to as the \textbf{Vehicle Fault Code (VFC; German:
 \textit{Vereinheitlichte Fehlercodierung})}.
+% TODO verify: confirm BMW's official English expansion of VFC and keep
+% the abbreviation consistent with the internal documentation.
 The VFC provides a standardized structure for documenting product-related
 defects across organizational units, systems, and processes. For this
 thesis, three VFC elements are particularly relevant: the \textbf{defect
@@ -116,7 +137,7 @@ functional area; and the \textbf{defect location}, which provides a more
 precise physical or positional localization. Internal data descriptions
 contain corresponding fields for defect type, defect place, and defect
 location, which are used together with material, supplier, plant, and
-vehicle information to identify defect patterns.
+vehicle information to identify defect patterns~\cite{bmwint_vfc}.
 
 Table~\ref{tab:vfc_elements} illustrates these three elements, together
 with the shared material key, using the door-trim example introduced
@@ -160,7 +181,12 @@ defect location. The defect signature provides a common basis for
 retrieving related records: the knowledge graph construction described in
 Chapter~\ref{ch:problem} likewise treats defect type, defect place,
 defect location, and material as business keys for linking historical
-quality incidents and associated rework evidence.
+quality incidents and associated rework evidence. In the knowledge graph,
+the three elements of the defect signature are represented as separate
+nodes rather than as one combined defect node, so that a new incident that
+shares only part of its signature with a historical incident remains
+connected to it. The same decomposition is used in Chapter~\ref{ch:problem}
+to grade how novel a new incident is.
 
 A shared defect signature, however, does not by itself establish an
 identical causer. The damage in the door-trim example could have been
@@ -176,7 +202,7 @@ When a defect requires formal investigation, it is documented as a
 quality problem rather than only an individual defect occurrence. Internal
 process documentation defines a QI as the formal documentation of a defect
 detected during production, followed by an investigation to identify the
-responsible unit. The relevant process documentation associates QI
+responsible unit~\cite{bmwint_frontdesk}. The relevant process documentation associates QI
 creation, messages, and tasks with QCat and Qcube, systems that also
 support activities for planning and documenting containment, sorting,
 rework, and inspection.
@@ -200,7 +226,11 @@ involve different materials, suppliers, plants, or process conditions. The
 QI therefore serves as the formal context in which a defect, its possible
 recurrence, and its potentially responsible units are assessed.
 
-\subsection{Process-Level Causer Attribution}\label{sec:fund_bmw_causer}
+% TODO decide: prediction unit = QI or single defect occurrence
+Chapter~\ref{ch:problem} defines whether the unit of prediction in this
+thesis is the quality incident or the individual defect occurrence.
+
+\subsection{Process-Level Causer Attribution}\label{sec:fund_bmw_causer}\label{sec:causer-attribution}
 
 \textbf{Process-level causer attribution} refers to the identification of
 the organizational or process-level unit most likely responsible for a
@@ -234,22 +264,31 @@ classification. The documented business questions address:
   \item whether other plants are, or may be, affected.
 \end{itemize}
 
-The result is an early process decision based on the information
-available at the time. It guides the subsequent investigation but may be
-revised as additional evidence becomes available.
+The result is an early process decision, made within minutes of detection
+on the basis of the information available at that time. It is usually
+given verbally first and then recorded as the initial causer allocation.
+It determines the follow-up route, but it is provisional: for supplier
+cases, responsibility is confirmed only when the supplier acknowledges it
+in the 8D process (Section~\ref{sec:8d}), and a rejection returns the
+incident to internal investigation. This thesis predicts the causer at the
+time of this first decision. Root causes and containment actions are not
+predicted; they appear only as historical evidence attached to similar
+past incidents.
 
 \subsection{Historical Lookup and Repeat-Problem Identification}\label{sec:fund_bmw_lookup}
 
 The current investigation process combines structured historical lookup
 with expert assessment. Internal QMT training material describes a
 repeat-failure search that queries three different combinations of
-supplier number, part number, and VFC attributes.
+supplier number, part number, and VFC attributes~\cite{bmwint_frontdesk}.
 % TODO: confirm the exact name of the lookup tool/function described in
 % the QMT training material -- unclear in the source recording.
 An empty result list indicates that no comparable QI was found using the
 active search configuration; where a QI with the same defect pattern
 already exists, the new QI can be linked to the original case and marked
-as a repeat failure.
+as a repeat failure. The rule-based baseline in Chapter~\ref{ch:method}
+reproduces exactly these search combinations, so that it represents the
+deployed process rather than an idealized rule system.
 
 At a high level, the current process can be summarized as follows:
 
@@ -280,9 +319,8 @@ The current lookup is transparent, because the filter attributes are
 explicit. Its coverage is nevertheless limited by the defined search
 combinations and the completeness of the recorded information: a relevant
 historical case may not be returned if it differs in material, supplier,
-fault type, or another required attribute. The thesis proposal identifies
-this exact-match limitation as a central weakness of the existing
-approach.
+fault type, or another required attribute. This exact-match limitation is
+the central weakness of the current process that motivates this thesis.
 
 \subsection{Inspection, Sorting, and Rework}\label{sec:fund_bmw_isr}
 
@@ -299,6 +337,13 @@ and the supplier. \textbf{Rework} documents how a detected defect was
 corrected; the relevant records may contain the defect type, the repair
 action (referred to as the rework activity), the affected component, the
 plant, and the responsible department.
+
+Two aspects of rework are particularly relevant for causer attribution.
+First, the type of rework activity carries information about the likely
+causer, because different corrections are typical for different defect
+origins. Second, rework occurrences accumulate on parts: repeated rework
+on the same part, or on the same part with the same defect signature,
+reveals whether a new incident is a repeat or part of a series.
 
 Across the different systems used by QMT, these activities are
 represented through \textbf{Sorting, Rework, and Inspection (SRI) orders}.
@@ -317,6 +362,13 @@ component entered assembly; conversely, a conforming component may be
 damaged during installation and subsequently reworked at another station.
 Detection, correction, and causation therefore remain separate aspects of
 the investigation.
+
+Rework information is therefore treated as evidence, not as proof of
+causation. Whether the rework record of a new incident is available at the
+time of the first causer decision depends on when it is recorded;
+Chapter~\ref{ch:problem} defines which records may be used for prediction.
+% TODO check in the data: is rework recorded before or after the initial
+% causer allocation? This decides whether it is an input or leakage.
 
 \subsection{Roles in the Quality Process}\label{sec:fund_bmw_roles}
 
@@ -337,7 +389,7 @@ and problem-solving:
     ecosystem as the application for recording a defect and performing an
     initial allocation to a likely causer.
 
-  \item[Quality Engineers and QMT Front-Desk Personnel]
+  \item[Quality Engineers and the QMT Front Desk]
     Examine the problem description, compare the issue with previous
     cases, assess a likely causer, and determine the appropriate follow-up
     process. Their documented business questions include repeat
@@ -359,7 +411,7 @@ and problem-solving:
     while mixed sorting additionally involves the supplier.
 \end{description}
 
-\subsection{Supplier Complaints and the 8D Process}\label{sec:fund_bmw_8d}
+\subsection{Supplier Complaints and the 8D Process}\label{sec:fund_bmw_8d}\label{sec:8d}
 
 If a defect is considered supplier-related, the incident can proceed to a
 supplier complaint process. The documented system landscape connects the
@@ -373,13 +425,25 @@ recurrence.
 
 The 8D method originated in the automotive industry as a standardized
 framework for supplier and internal problem-solving and is applied within
-BMW's quality management process whenever a defect is confirmed as
-supplier-related. Although the disciplines are numbered sequentially, they
+BMW's quality management process when supplier responsibility is
+suspected; confirmation of that responsibility is itself part of the
+process. Although the disciplines are numbered sequentially, they
 are not always executed strictly one after another in practice: D3
 (interim containment) is typically initiated in parallel with, or even
 before, the completion of D4 (root-cause analysis), since protecting the
 customer and the production process cannot wait until the root cause is
 fully understood.
+
+A central element for this thesis is the supplier acknowledgement, a
+dedicated field in the 8D process in which the supplier accepts or rejects
+responsibility for the defect. The acknowledgement typically follows the
+problem description (D2). Until it is given, the organization operates on
+the basis of the first causer decision. If the supplier rejects
+responsibility, the effort already invested in supplier communication,
+sorting and containment was misdirected, a dispute may follow, and the
+internal investigation begins late. Predicting the outcome of this
+acknowledgement at the time of the first decision is the practical goal of
+this thesis.
 
 In practice, each QI is assigned a priority level, and the eight
 disciplines are governed by corresponding target timelines that differ
@@ -415,14 +479,17 @@ an 8D report is not a single, undifferentiated text block: each discipline
 corresponds to a distinct, dated piece of evidence, such as a problem
 description, a containment action, or a verified root cause, that can in
 principle be linked to the underlying QI as a separate item of evidence
-rather than treated as one opaque document. Table~\ref{tab:8d_disciplines}
-summarizes the eight disciplines reviewed for this thesis.
+rather than treated as one opaque document.
 
-\begin{minipage}{\textwidth}
+For a new incident, no 8D report exists at the time of the first causer
+decision; only the 8D reports of historical incidents are available as
+evidence. Table~\ref{tab:8d_disciplines} summarizes the eight disciplines
+reviewed for this thesis.
+
+\begin{table}[tbp]
 \centering
 \footnotesize
-\captionsetup{type=table}
-\captionof{table}{The eight disciplines (8D) of the problem-solving process.}
+\caption{The eight disciplines (8D) of the problem-solving process.}
 \label{tab:8d_disciplines}
 \renewcommand{\arraystretch}{1.05}
 \begin{tabular}{lp{3.9cm}p{6.8cm}}
@@ -475,8 +542,7 @@ summarizes the eight disciplines reviewed for this thesis.
     problem-solving process. \\
   \bottomrule
 \end{tabular}
-\end{minipage}
-\vspace{\baselineskip}
+\end{table}
 
 For causer attribution, the 8D process is particularly relevant because
 its disciplines produce different forms of historical evidence: D2
@@ -495,9 +561,11 @@ comparable door-trim damage was related to supplier packaging. This
 provides relevant historical evidence if the current incident involves
 the same material, supplier, and incoming inspection point; its relevance
 is weak if the defect was first identified only after an internal
-assembly activity. Within this thesis, 8D information is consequently
-treated as an important historical evidence source rather than as an
-automatic attribution rule.
+assembly activity. Within this thesis, 8D information of historical
+incidents is therefore treated as evidence (in particular the recorded
+containment, D3, and the verified root cause, D4) and not as an automatic
+attribution rule, while the supplier acknowledgement provides the
+confirmed causer used as the label (Chapter~\ref{ch:problem}).
 
 \subsection{Summary}\label{sec:fund_bmw_summary}
 
@@ -527,12 +595,16 @@ additionally generate 8D reports, whose eight disciplines yield
 further, differently reliable forms of historical evidence depending on
 how far an investigation has progressed (Section~\ref{sec:fund_bmw_8d}).
 
-Across all eight subsections, the same limitation recurs: relevant
-evidence is distributed across IPS-Q, QCat, Qcube, SRI orders, and 8D
-reports, and today it is combined only through exact-match retrieval on a
-small set of attributes, rather than through systematic reasoning over
-all available historical evidence. This motivates the knowledge-graph-based
-approach developed in the remainder of this thesis, which integrates
-these heterogeneous data sources into a single structure
-(Chapter~\ref{ch:problem}) and supports evidence retrieval, aggregation,
-and explanation beyond exact-match lookup (Chapter~\ref{ch:method}).
+Across all eight subsections, the same pattern recurs. The causer is
+decided early, within minutes and on sparse information, but confirmed
+late, through the supplier's acknowledgement in the 8D process. The
+evidence that could support the early decision -- historical incidents,
+rework activities and their repetition, and the outcomes of past 8D
+processes -- is distributed across IPS-Q, QCat, Qcube, SRI orders and 8D
+reports, and today it is used only through exact-match search on a small
+set of attributes. This motivates the approach of this thesis: to
+integrate these sources into one knowledge graph (Chapter~\ref{ch:problem})
+and to predict the causer at the time of the first decision from partially
+matching historical cases, together with evidence whose faithfulness to
+the prediction can be measured (Chapters~\ref{ch:method}
+and~\ref{ch:setup}).

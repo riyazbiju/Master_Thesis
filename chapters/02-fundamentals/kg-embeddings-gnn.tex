@@ -1,0 +1,58 @@
+\section{Knowledge Graph Embeddings and Graph Neural Networks}\label{sec:fund_kge}
+
+Section~\ref{sec:fund_kg_completion} introduced knowledge graph embedding
+methods only in general terms. This section briefly introduces the two
+families of representation-learning methods compared in this thesis:
+translational and bilinear embedding models, which assign each entity and
+relation a fixed vector learned during training, and relational graph
+neural networks, which instead derive an entity's representation from its
+neighbors in the graph.
+
+The translational family is exemplified by TransE~\cite{bordes2013transe},
+which models a relation as a translation from head to tail,
+\[
+  \mathbf{h} + \mathbf{r} \approx \mathbf{t},
+\]
+and is simple and efficient, but struggles with relations that are
+symmetric or connect one entity to many others~\cite{wang2017kgesurvey}.
+ComplEx~\cite{trouillon2016complex} addresses this by scoring a triple
+with complex-valued vectors instead of a single translation, which lets
+it represent both symmetric and asymmetric relations. Both methods,
+however, learn a dedicated vector for every entity seen during training
+and provide no representation for an entity absent from the training
+graph, which is why Section~\ref{sec:fund_kg_transind} classifies them as
+transductive. To score a new incident, these models therefore require an
+adaptation, described in Chapter~\ref{ch:method}.
+% TODO decide how TransE/ComplEx score an unseen incident: retrain,
+% nearest-neighbor initialization, or exclude them from novel-incident
+% evaluation entirely.
+
+Relational graph neural networks instead compute an entity's
+representation from its neighbors rather than from a fixed lookup table.
+The relational graph convolutional network
+(R-GCN)~\cite{schlichtkrull2018rgcn} extends the graph convolutional
+network~\cite{kipf2017gcn} to multi-relational graphs, combining each
+entity's representation with information from its neighbors, processed
+separately per relation type, over several layers. Because this
+computation draws on an entity's actual neighbors rather than a
+pre-trained vector, it can in principle be applied to an entity that was
+never seen during training -- provided its initial representation does
+not depend on its identity (e.g.\ a vector of known attribute values
+rather than a learned per-entity embedding).
+% TODO decide R-GCN initialization of new incident nodes: attribute
+% vector, zero vector, or learned type embedding shared across incidents.
+
+These three mechanisms -- the rule-based exact-match baseline of
+Section~\ref{sec:fund_bmw_lookup}, translational and bilinear embeddings,
+and relational graph neural networks -- form the three model families
+compared in this thesis (Chapter~\ref{ch:method}). They trade off
+generalization and interpretability: the rule-based baseline is fully
+transparent but generalizes only to an identical historical match;
+embedding models generalize further through geometric similarity, at the
+cost of a score that is harder to translate into checkable evidence; and
+graph neural networks generalize furthest, to incidents never observed
+before, but their layered message passing makes it least obvious which
+part of the neighborhood drove a prediction. This trade-off is exactly
+what the main research question (Section~\ref{sec:intro_rq}) asks about,
+and it motivates evaluating accuracy and faithfulness jointly, across
+novelty levels, rather than in isolation.

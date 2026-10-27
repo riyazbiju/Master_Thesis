@@ -1,2 +1,72 @@
 \section{Explainable Artificial Intelligence}\label{sec:fund_xai}
-TODO
+
+As machine learning models increasingly support consequential decisions,
+understanding \emph{why} a model produced a given output becomes as
+important as its accuracy. Explainable artificial intelligence (XAI)
+studies how to make a model's behavior understandable to a
+human~\cite{guidotti2018survey, arrieta2020xai}. The literature commonly
+organizes explanation methods along two dimensions: \textbf{intrinsic}
+(interpretable by design, e.g.\ a small rule set) versus \textbf{post-hoc}
+(an explanation produced after the fact for an otherwise fixed
+model)~\cite{guidotti2018survey}, and \textbf{local} (one prediction)
+versus \textbf{global} (the model's behavior overall)~\cite{arrieta2020xai}.
+Figure~\ref{fig:xai_taxonomy} summarizes this orientation with
+representative methods per quadrant.
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  font=\sffamily,
+  cell/.style={rectangle, draw=black!55, thick, align=center,
+    minimum width=4.5cm, minimum height=2.1cm, font=\sffamily\small,
+    inner sep=5pt},
+  axislbl/.style={font=\sffamily\small\bfseries}
+]
+\node[cell, fill=vizblue!10] (pl) {\textbf{Post-hoc + Local}\\[2pt]
+  \footnotesize LIME, SHAP, GNNExplainer subgraph};
+\node[cell, fill=black!4, right=3mm of pl] (pg) {\textbf{Post-hoc + Global}\\[2pt]
+  \footnotesize Global surrogate models};
+\node[cell, fill=vizorange!12, above=3mm of pl] (il) {\textbf{Intrinsic + Local}\\[2pt]
+  \footnotesize Rule trace for one case};
+\node[cell, fill=vizgray!10, above=3mm of pg] (ig) {\textbf{Intrinsic + Global}\\[2pt]
+  \footnotesize Decision trees, rule-based systems};
+
+\node[axislbl, above=2mm of il] {Local scope};
+\node[axislbl, above=2mm of ig] {Global scope};
+\node[axislbl, left=3mm of pl, rotate=90, anchor=center] {Post-hoc};
+\node[axislbl, left=3mm of il, rotate=90, anchor=center] {Intrinsic};
+\end{tikzpicture}
+\caption{The standard post-hoc/intrinsic and local/global
+  orientation for explanation methods, with representative examples per
+  quadrant~\cite{guidotti2018survey, arrieta2020xai, ying2019gnnexplainer}.}
+\label{fig:xai_taxonomy}
+\end{figure}
+
+Producing an explanation is not sufficient on its own: it must also be
+evaluated. \textbf{Faithfulness} describes the degree to which an
+explanation accurately reflects the reasoning the model actually used,
+rather than a plausible-sounding story constructed after the
+fact~\cite{jacovi2020faithfulness}. For explanations that consist of
+cited evidence, such as graph edges, faithfulness can be tested by
+intervention: an explanation is \emph{necessary} if removing the cited
+evidence changes the prediction, and \emph{sufficient} if the cited
+evidence alone still reproduces it. A related property,
+\textbf{sparsity}, concerns how concise an explanation is: fewer, more
+decisive pieces of evidence are easier to check than an exhaustive list.
+SHAP~\cite{lundberg2017shap} is a widely used post-hoc, local method that
+attributes a prediction to input features via a game-theoretic notion of
+contribution.
+
+This taxonomy directly informs SQ2 (Section~\ref{sec:intro_rq}), which
+asks how faithfully each of the three model families explains its own
+predictions. The rule-based baseline is intrinsic and local, since its
+prediction is the matching rule itself; knowledge graph embeddings and
+the relational graph neural network are both post-hoc and local,
+explained respectively through the training facts and the
+message-passing neighborhood (via
+GNNExplainer~\cite{ying2019gnnexplainer}) that most influenced a
+prediction. Converting all three into a common representation -- a set
+of cited graph edges -- is what allows the necessary-and-sufficient
+intervention test above to be applied uniformly: Chapter~\ref{ch:setup}
+defines this shared protocol and applies it to the predictions evaluated
+in Chapter~\ref{ch:results}.

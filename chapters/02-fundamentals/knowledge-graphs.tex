@@ -22,19 +22,121 @@ following triples illustrate this structure:
 \begin{aligned}
   (\text{Paris},     \;&\text{CAPITAL\_OF},  \text{France})   \\
   (\text{Component},\;&\text{SUPPLIED\_BY},\text{Supplier})  \\
-  (\text{Incident},  \;&\text{HAS\_DEFECT},  \text{Defect})
+  (\text{Incident},  \;&\text{HAS\_DEFECT\_TYPE},  \text{DefectType})
 \end{aligned}
 \]
 The first states that Paris is the capital of France; the second, that a
 component originates from a particular supplier; and the third records
-the association between a reported incident and its observed defect.
+the type of defect observed in a reported incident.
 
 A knowledge graph is formed by combining many such triples, allowing the
-same entity to participate in multiple relations. A single component, for
-instance, may simultaneously be connected to a supplier, a production
-plant, a recorded incident, and an observed defect. The resulting
+same entity to participate in multiple relations. A single quality
+incident, for instance, may simultaneously be connected to the plant at
+which it occurred, the defect it reports, the rework performed in
+response, and the causer ultimately identified for it. The resulting
 structure is therefore a multi-relational graph, in which different edge
-types express different semantic relationships~\cite{wang2017kgesurvey}.
+types express different semantic relationships~\cite{wang2017kgesurvey},
+as illustrated in Figure~\ref{fig:kg_example_graph} using the schema
+proposed for this thesis.
+
+This schema follows an event-centric design: the Quality Incident node
+represents a discrete occurrence in time, while the remaining entities
+describe either the circumstances under which it occurred (plant,
+material, supplier) or the response to it and its eventual resolution
+(defect, rework, inspection, causer). Each entity type corresponds to a
+concrete record type already introduced in Section~\ref{sec:fund_bmw}:
+incidents and defects originate from IPS-Q and the VFC, rework and
+inspection records from SRI orders, and the \texttt{CAUSED\_BY} relation
+from the confirmed causer, that is, the supplier's acknowledgement in the
+8D process or the final internal assignment. In this thesis,
+\texttt{CAUSED\_BY} denotes recorded organizational responsibility, not a
+physical cause-and-effect mechanism. Representing them within a single
+graph keeps the structure extensible, since new incidents, materials, or
+suppliers can be added as they occur without requiring changes to the
+relations already defined between existing entity types.
+
+\definecolor{vizblue}{HTML}{2A78D6}
+\definecolor{vizorange}{HTML}{EB6834}
+\definecolor{vizgray}{HTML}{898781}
+
+\begin{minipage}{\textwidth}
+\centering
+\begin{tikzpicture}[
+  scale=0.73, transform shape,
+  font=\sffamily,
+  every node/.style={font=\sffamily},
+  qi/.style={ellipse, draw=vizblue, line width=1.0pt, fill=vizblue!10,
+    minimum width=2.1cm, minimum height=0.9cm, align=center,
+    font=\sffamily\small\bfseries, text=black},
+  ctx/.style={ellipse, draw=vizgray, line width=0.7pt, fill=vizgray!8,
+    minimum width=1.7cm, minimum height=0.8cm, align=center,
+    font=\sffamily\scriptsize, text=black},
+  target/.style={ellipse, draw=vizorange, line width=1.4pt,
+    fill=vizorange!14, minimum width=1.9cm, minimum height=0.9cm,
+    align=center, font=\sffamily\small\bfseries, text=black},
+  known/.style={-{Latex[length=2mm, width=1.5mm]}, line width=0.75pt,
+    draw=black!70},
+  later/.style={-{Latex[length=2mm, width=1.5mm]}, line width=0.75pt,
+    draw=black!70, dashed},
+  lbl/.style={font=\sffamily\tiny, text=black!65, fill=white,
+    inner sep=1pt}
+]
+
+\node[qi] (qi) {Quality\\Incident};
+\node[ctx, above=1.3cm of qi] (plant) {Plant};
+\node[target, right=2.1cm of qi] (causer) {Causer\\\footnotesize(supplier or internal unit)};
+% TODO candidate set: confirm the exact enumeration of supplier and
+% internal-unit entities eligible as causer candidates.
+\node[ctx, below=1.1cm of qi] (rework) {Rework\\Activity};
+\node[ctx, below=1.1cm of rework] (insp) {Inspection};
+\node[ctx, below=1.1cm of causer] (case8d) {8D Case};
+\node[ctx, left=1.7cm of qi] (dtype) {Defect\\Type};
+\node[ctx, above=0.75cm of dtype] (dplace) {Defect\\Place};
+\node[ctx, below=0.75cm of dtype] (dloc) {Defect\\Location};
+\node[ctx, left=1.7cm of dtype] (mat) {Material};
+\node[ctx, left=1.7cm of mat] (sup) {Supplier};
+
+\draw[known] (qi) -- node[lbl, right] {OCCURRED\_AT} (plant);
+\draw[later] (qi) -- node[lbl, above] {CAUSED\_BY} (causer);
+% TODO: move the REWORK_IN edge to \known if the data check in
+% Section 2.1.6 confirms rework is recorded before the first decision.
+\draw[later] (qi) -- node[lbl, right] {REWORK\_IN} (rework);
+\draw[later] (rework) -- node[lbl, right] {RELATED\_TO} (insp);
+\draw[later] (causer) -- node[lbl, right] {HAS\_8D\_CASE} (case8d);
+\draw[known] (qi) -- node[lbl, above] {HAS\_DEFECT\_TYPE} (dtype);
+\draw[known] (qi) -- node[lbl, above, pos=0.7] {HAS\_DEFECT\_PLACE} (dplace);
+\draw[known] (qi) -- node[lbl, below, pos=0.7] {HAS\_DEFECT\_LOCATION} (dloc);
+\draw[known] (dtype) -- node[lbl, above] {ON\_MATERIAL} (mat);
+\draw[known] (mat) -- node[lbl, above] {SUPPLIED\_BY} (sup);
+\end{tikzpicture}
+
+\vspace{2mm}
+{\color{black!25}\hrule height 0.4pt}
+\vspace{2mm}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c l@{\hspace{6mm}} c l@{\hspace{6mm}} c l@{}}
+  \tikz\node[ellipse, draw=vizblue, line width=1.0pt, fill=vizblue!10, minimum width=0.4cm, minimum height=0.3cm]{}; &
+    \sffamily\scriptsize Event &
+  \tikz\node[ellipse, draw=vizorange, line width=1.4pt, fill=vizorange!14, minimum width=0.4cm, minimum height=0.3cm]{}; &
+    \sffamily\scriptsize Prediction target &
+  \tikz\draw[line width=0.75pt, draw=black!70] (0,0.1) -- (0.5,0.1); &
+    \sffamily\scriptsize Known at first decision \\
+  \multicolumn{4}{l}{} &
+  \tikz\draw[line width=0.75pt, draw=black!70, dashed] (0,0.1) -- (0.5,0.1); &
+    \sffamily\scriptsize Created later
+\end{tabular}
+
+\captionsetup{type=figure}
+\captionof{figure}{Knowledge-graph schema for causer attribution. The
+  quality incident is the central event node. Solid edges denote
+  information available at the time of the first causer decision; dashed
+  edges denote information created later. The \texttt{CAUSED\_BY} edge to
+  a candidate causer (a supplier or an internal unit) is the prediction
+  target (highlighted).}
+\label{fig:kg_example_graph}
+\end{minipage}
+\vspace{\baselineskip}
+
 Entities and relations may additionally carry types and properties: an
 incident entity may be described by attributes such as an identifier, a
 creation date, and a status, while a defect entity may be described by its
@@ -101,7 +203,7 @@ combinations. However, the ability of such a model to handle new entities
 depends on whether it follows a transductive or an inductive learning
 setting.
 
-\subsection{Transductive and Inductive Link Prediction}\label{sec:fund_kg_transind}
+\subsection{Transductive and Inductive Link Prediction}\label{sec:fund_kg_transind}\label{sec:inductive}
 
 In a \textbf{transductive} setting, the set of entities considered during
 inference is already known at training time: the model observes a graph
@@ -147,6 +249,84 @@ identities of individual entities~\cite{teru2020grail}; the learned
 patterns can then be applied to a new subgraph containing an entity that
 was absent during training.
 
+Inductive settings differ in how much of the test graph is new. In the
+\emph{semi-inductive} setting, a new entity appears at inference time but
+is connected to entities that were present during training; in the
+\emph{fully inductive} setting, inference takes place on a graph whose
+entities are entirely disjoint from the training
+graph~\cite{ali2021hyperrelational}. A newly detected quality incident is
+a new node connected to known defect, part, and supplier nodes, so causer
+attribution falls into the semi-inductive setting.
+Figure~\ref{fig:transductive_inductive} contrasts the transductive and
+semi-inductive settings for the causer-attribution task developed further
+in Section~\ref{sec:fund_kg_relevance}.
+
+\begin{minipage}{\textwidth}
+\centering
+\begin{minipage}{0.47\textwidth}
+  \centering
+  \begin{tikzpicture}[
+    known/.style={ellipse, draw=black, thick, minimum width=1.3cm,
+      minimum height=0.8cm, font=\small},
+    edge/.style={-{Latex[length=1.8mm]}, thick},
+    qedge/.style={-{Latex[length=1.8mm]}, thick, dashed},
+    lbl/.style={font=\scriptsize}
+  ]
+    \node[known] (q) {$q$};
+    \node[known, right=1.5cm of q] (m) {$m$};
+    \node[known, below=1.1cm of m] (c1) {$c_1$};
+    \node[known, left=1.5cm of c1] (c2) {$c_2$};
+    \draw[edge] (q) -- (m);
+    \draw[edge] (m) -- (c1);
+    \draw[edge] (m) -- (c2);
+    \draw[qedge] (q) to[bend right=25] node[lbl, below left] {?} (c1);
+  \end{tikzpicture}
+
+  \vspace{2mm}
+  \textbf{(a) Transductive}\\
+  \footnotesize $q$, $c_1$, and $c_2$ were all present during training.
+\end{minipage}%
+\hfill
+\begin{minipage}{0.47\textwidth}
+  \centering
+  \begin{tikzpicture}[
+    known/.style={ellipse, draw=black, thick, minimum width=1.3cm,
+      minimum height=0.8cm, font=\small},
+    new/.style={ellipse, draw=black, thick, dashed, minimum width=1.3cm,
+      minimum height=0.8cm, font=\small},
+    edge/.style={-{Latex[length=1.8mm]}, thick},
+    qedge/.style={-{Latex[length=1.8mm]}, thick, dashed},
+    lbl/.style={font=\scriptsize}
+  ]
+    \node[new] (qn) {$q_{\text{new}}$};
+    \node[known, right=1.5cm of qn] (m2) {$m$};
+    \node[known, below=1.1cm of m2] (c1b) {$c_1$};
+    \node[known, left=1.5cm of c1b] (c2b) {$c_2$};
+    \draw[edge] (qn) -- (m2);
+    \draw[edge] (m2) -- (c1b);
+    \draw[edge] (m2) -- (c2b);
+    \draw[qedge] (qn) to[bend right=25] node[lbl, below left] {?} (c1b);
+  \end{tikzpicture}
+
+  \vspace{2mm}
+  \textbf{(b) Semi-inductive}\\
+  \footnotesize $q_{\text{new}}$ (dashed) is absent from training; only
+  its connection to $m$ is available at inference time.
+\end{minipage}
+\captionsetup{type=figure}
+\captionof{figure}{Transductive versus semi-inductive link prediction. In
+  both panels, the dashed edge marks the relation to be predicted. (a) In
+  the transductive setting, the incident $q$ whose causer relation is
+  masked was already present during training, so an entity-specific
+  representation for $q$ has already been learned. (b) In the
+  semi-inductive setting, the new incident $q_{\text{new}}$ did not exist
+  during training; the model must instead use its known connection to the
+  material $m$ to judge the plausibility of the candidate triple
+  $(q_{\text{new}}, \text{CAUSED\_BY}, c_1)$ relating it to a causer.}
+\label{fig:transductive_inductive}
+\end{minipage}
+\vspace{\baselineskip}
+
 The distinction can be summarized as follows: transductive link
 prediction predicts missing relations among entities that are already
 known during training, whereas inductive link prediction transfers
@@ -155,47 +335,43 @@ training. This distinction concerns the availability of \emph{entities},
 rather than only the presence or absence of individual edges: hiding a
 relation for an incident that was already observed during training
 remains a transductive task, whereas predicting the same type of relation
-for an incident that was entirely absent from training constitutes an
-inductive task.
+for an incident that was absent from training, but is connected to known
+entities, constitutes a semi-inductive task.
 
 \subsection{Relevance to the Proposed Methodology}\label{sec:fund_kg_relevance}
 
-RQ1 (Section~\ref{sec:intro_rq}) asks how heterogeneous industrial
-knowledge can be retrieved through a knowledge graph to support the
-investigation of \emph{previously unseen} quality incidents. The concepts
-introduced above give this question a precise formulation: causer
-attribution is framed as the prediction of a missing relation between a
-quality incident and a candidate causer,
+SQ1 (Section~\ref{sec:intro_rq}) asks how well causer attribution
+generalizes to quality incidents that have no exact historical match. The
+concepts introduced above give this question a precise formulation:
+causer attribution is framed as the prediction of a missing relation
+between a quality incident and a candidate causer,
 \[
   (q, \text{CAUSED\_BY}, c),
 \]
-where $q$ denotes a quality incident and $c$ a candidate causer.
-Historically resolved incidents provide examples for which this relation
-is already known; a newly created incident has no known causer and must
-instead serve as the head entity of an incomplete triple,
+where $q$ denotes a quality incident and $c$ a candidate causer, where the
+candidate causers are the suppliers and internal units defined in
+Chapter~\ref{ch:problem}. Historically resolved incidents provide examples
+for which this relation is already known; a newly created incident has no
+known causer and must instead serve as the head entity of an incomplete
+triple,
 \[
-  (q_{\text{new}}, \text{CAUSED\_BY}, ?).
+  (q_{\text{new}}, \text{CAUSED\_BY}, ?),
 \]
+whose missing tail is the causer to be predicted.
 
 Because $q_{\text{new}}$ did not exist when the historical training graph
 was built, no entity-specific representation could have been learned for
-it -- this is precisely the inductive setting described in
-Section~\ref{sec:fund_kg_transind}. What remains available is
-$q_{\text{new}}$'s local graph context: its connections to material,
-plant, inspection, and other quality information. Rather than depending
-on the identity of the incident, the methodology developed in this thesis
-compares this relational neighborhood against the structures of
-previously resolved cases, directly operationalizing RQ1's requirement to
-retrieve evidence for incidents that have no exact historical match.
+it -- this is precisely the semi-inductive setting described in
+Section~\ref{sec:inductive}. What remains available is the local graph
+context of $q_{\text{new}}$ at the time of the first causer decision: its
+connections to its defect type, defect place, defect location, material,
+supplier and plant, and through them, to historical incidents and their
+confirmed causers. Rather than depending on the identity of the incident,
+the methodology developed in this thesis compares this relational
+neighborhood against the structures of previously resolved cases.
 
-This inductive framing is also what connects the proposed methodology to
-the broader scientific motivation outlined in
-Section~\ref{sec:intro_motivation_sci}: treating causer attribution as
-link prediction under an open, continuously growing entity set, rather
-than a fixed, previously observed one, is itself the methodological
-contribution that generalizes beyond BMW's quality process to any
-industrial decision-support setting in which an organization's knowledge
-graph keeps growing after deployment. Chapter~\ref{ch:setup} reflects
-this requirement directly: evaluation holds out incidents whose entities
-are entirely unseen during training, since a transductive evaluation
-would not reflect this intended, continuously evolving setting.
+Because a new incident may share all, some or none of its attribute
+combination with historical incidents, the difficulty of the prediction
+varies from case to case. Chapter~\ref{ch:problem} therefore groups test
+incidents into novelty levels, and Chapter~\ref{ch:setup} evaluates every
+model on held-out incidents, ordered in time, separately for each level.

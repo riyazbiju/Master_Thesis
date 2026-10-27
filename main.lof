@@ -3,15 +3,19 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Overview of BMW's current quality-incident and causer-attribution process, synthesized from Sections~\ref {sec:fund_bmw_detection}--\ref {sec:fund_bmw_8d}.}}{7}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Overview of BMW's quality-incident and causer-attribution process. The first causer decision is made within minutes of detection (prediction point); supplier responsibility is confirmed only later through the supplier's acknowledgement in the 8D process, and a rejection returns the incident to internal investigation.}}{7}{figure.caption.7}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Knowledge-graph schema for causer attribution. The quality incident is the central event node. Solid edges denote information available at the time of the first causer decision; dashed edges denote information created later. The \texttt {CAUSED\_BY} edge to a candidate causer (a supplier or an internal unit) is the prediction target (highlighted).}}{18}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Transductive versus semi-inductive link prediction. In both panels, the dashed edge marks the relation to be predicted. (a) In the transductive setting, the incident $q$ whose causer relation is masked was already present during training, so an entity-specific representation for $q$ has already been learned. (b) In the semi-inductive setting, the new incident $q_{\text {new}}$ did not exist during training; the model must instead use its known connection to the material $m$ to judge the plausibility of the candidate triple $(q_{\text {new}}, \text {CAUSED\_BY}, c_1)$ relating it to a causer.}}{21}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces The standard post-hoc/intrinsic and local/global orientation for explanation methods, with representative examples per quadrant~\blx@tocontentsinit {0}\cite {guidotti2018survey, arrieta2020xai, ying2019gnnexplainer}.}}{24}{figure.caption.15}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Knowledge-graph schema (placeholder).}}{23}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Knowledge-graph schema (placeholder).}}{26}{figure.caption.16}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \def \@chapapp {\appendixname }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
